@@ -4,6 +4,12 @@ EBTCalc (Desktop) is a Reverse Polish Notation (RPN) calculator that can have cu
 
 EBTCalc is built on the [`Electron`](https://github.com/electron/electron) framework.
 
+# Copyright
+
+EBTCalc (Desktop)
+
+&#169; Copyright 2019, [`Eric Bergman-Terrell`](https://www.ericbt.com)
+
 # Links
 
 * [`website`](https://www.ericbt.com/ebtcalc_electron)
@@ -29,3 +35,7 @@ npm start
 # License
 
 [`GPL3`](https://www.gnu.org/licenses/gpl-3.0.en.html)
+
+# Feedback
+
+Please submit your feedback to EBTCalc@EricBT.com.
