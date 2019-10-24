@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:width="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="edit.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <title>Edit Custom Button Code</title>
+</head>
+<body>
+<div id="search">
+  <span>
+      <button id="search_previous">←</button>
+  </span>
+  <span>
+      <input type="text" id="search_text" placeholder="search text"/>
+  </span>
+  <span>
+      <button id="search_next">→</button>
+  </span>
+  <span>
+    <input type="checkbox" id="match_case"/><label for="match_case">Match Case</label>
+  </span>
+  <span>
+    <button id="go_to_line">Go to Line</button>
+  </span>
+    <span>
+    <label for="select_class" id="select_class_label">Class:</label><select id="select_class"></select>
+  </span>
+    <span>
+    <label for="select_method" id="select_method_label">Method:</label><select id="select_method"></select>
+  </span>
+    <span>
+    <label for="select_function" id="select_function_label">Function:</label><select id="select_function"></select>
+  </span>
+</div>
+<textarea id="source_code" class="source-code"></textarea>
+<div id="bottom_content">
+    <span id="cursor_position_and_errors">
+        <span id="cursor_position_container">
+            <span id="cursor_position"></span>
+        </span>
+
+        <span id="error_position"></span>
+        <span id="error_description"></span>
+        <button id="go_to_error" class="button" disabled="false">Go to Error</button>
+    </span>
+
+    <span id="action_buttons">
+        <button id="save" class="action-button button" disabled>Save</button>
+        <button id="cancel" class="action-button button">Close</button>
+        <button id="syntax_check" class="action-button button">Syntax Check</button>
+        <button id="pretty_print" class="action-button button">Pretty-Print</button>
+        <button id="settings" class="action-button button">Settings</button>
+    </span>
+</div>
+<script src="src/edit.js"></script>
+</body>
+</html>

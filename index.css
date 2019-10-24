@@ -1,0 +1,199 @@
+#topLine {
+    /* Ensure that the border doesn't make the box longer than 100%: https://css-tricks.com/box-sizing/ */
+    box-sizing: border-box;
+
+    height: 1.5em;
+    width: 100%;
+    border-color: black;
+    padding: 0 0.15em;
+    font-family: Lucida Console, Courier, monospace;
+    font-size: x-large;
+    text-align: right;
+}
+
+.stack {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    vertical-align: top;
+
+    -webkit-user-select:none;
+    height: 13em;
+
+    overflow-y: auto;
+
+    background-color: lightgrey;
+}
+
+#spacer {
+    background-color: lightgrey;
+    height: 0.25em;
+    margin: 0;
+}
+
+li>pre {
+    /* // https://stackoverflow.com/questions/8543859/css-vertical-alignment-text-inside-li */
+    display: inline;
+    text-align: right;
+
+    vertical-align: middle;
+
+    font-family: Lucida Console, Courier, monospace;
+    font-size: x-large;
+}
+
+.table-column-1 {
+    margin: auto;
+    background-color: lightslategray;
+}
+
+.table-predefined-buttons {
+    -webkit-user-select:none;
+}
+
+.predefined-button {
+    width: 2em;
+    height: 2em;
+
+    font-family: Lucida Console, Courier, monospace;
+    font-size: large;
+
+    -webkit-user-select:none;
+}
+
+.button_spacer {
+    width: 1em;
+}
+
+.predefined-wide-button {
+    width: 7em;
+    height: 2em;
+
+    font-family: Lucida Console, Courier, monospace;
+    font-size: medium;
+}
+
+.enter-button {
+    width: 2em;
+    height: 100%;
+
+    margin-left: 2em;
+
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+
+    font-family: Lucida Console, Courier, monospace;
+    font-size: large;
+
+    -webkit-user-select:none;
+}
+
+.category-and-function-buttons {
+    height: 2em;
+}
+
+.category-and-function-buttons-td {
+    background-color: lightslategray;
+
+    overflow: auto;
+
+    -webkit-user-select:none;
+}
+
+.category-row {
+    height: 2em;
+    background-color: white;
+}
+
+.custom_buttons_table {
+    height: calc(100vh - 7em);
+}
+
+.custom-button {
+    width: 15em;
+    height: 1.5em;
+    font-family: Lucida Console, Courier, monospace;
+    font-size: medium;
+
+    -webkit-user-select:none;
+}
+
+#error {
+    background-color: white;
+    color: black;
+
+    display: table-cell;
+
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+
+    -webkit-user-select:none;
+}
+
+.category-row,
+#category_label,
+#table_spacer {
+    -webkit-user-select:none;
+}
+
+#bottom_section_row {
+    display: table-row;
+}
+
+#bottom_section {
+    margin-top: 0.5em;
+    height: 1.5em;
+
+    display: table;
+}
+
+#bottom_buttons {
+    height: 1.5em;
+    display: table-cell;
+
+    -webkit-user-select: none;
+}
+
+.bottom-button {
+    width: 10em;
+    height: 1.5em;
+    font-family: Lucida Console, Courier, monospace;
+    font-size: medium;
+
+    -webkit-user-select:none;
+}
+
+.box {
+    float: left;
+}
+
+#left_and_right_columns {
+    width: calc(100vw - 1em);
+}
+
+#left_and_right_columns::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+#left_column {
+    width: 29.5em;
+    height: calc(100vh - 4em);
+
+    background-color: lightslategray;
+}
+
+#right_column {
+    width: calc(100vw - 29.5em - 1em);
+    height: calc(100vh - 4em);
+
+    box-sizing: border-box;
+    border-color: white;
+    border-style: solid;
+    border-width: 0 0 0 10px;
+
+    background-color: lightslategray;
+}

@@ -1,0 +1,43 @@
+{
+  "name": "EBTCalc",
+  "version": "0.0.0",
+  "description": "RPN Calculator",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "npm run build-windows && npm run build-linux",
+    "build-windows": "electron-packager . --icon=resources/calc.ico --out ../EBTCalc-build --overwrite --platform=win32 --asar",
+    "build-mac": "electron-packager . --out ../EBTCalc-build --overwrite --platform=darwin --asar",
+    "build-linux": "electron-packager . --icon=resources/calc.png --out ../EBTCalc-build --overwrite --platform=linux --asar",
+    "test": "mocha './unit/*.test.js'"
+  },
+  "config": {
+    "githubUrl": "https://github.com/EricTerrell/EBTCalc",
+    "websiteUrl": "https://www.EricBT.com",
+    "donateUrl": "https://www.EricBT.com/ebtcalc_electron/donate",
+    "onLineHelpUrl": "https://www.ericbt.com/ebtcalc_electron/help",
+    "submitFeedback": "mailto:EBTCalc@EricBT.com?subject=EBTCalc Feedback",
+    "ebtCalcUrl": "https://play.google.com/store/apps/details?id=com.ericbt.rpncalcpaid"
+  },
+  "repository": "https://github.com/EricTerrell/EBTCalcDesktop",
+  "keywords": [],
+  "author": "eric@terrell.info",
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "electron": "^6.0.11",
+    "electron-packager": "^14.0.6",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.1",
+    "sinon": "^7.5.0"
+  },
+  "dependencies": {
+    "prettier": "1.18.2",
+    "bignumber.js": "^9.0.0",
+    "esprima": "^4.0.1",
+    "pretty-data": "^0.40.0",
+    "serialize-javascript": "^2.1.0"
+  },
+  "mocha": {
+    "spec": "./unit"
+  }
+}

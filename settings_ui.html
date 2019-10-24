@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:width="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="settings_ui.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <title>Settings</title>
+</head>
+<body>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Setting</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Decimal Point</td>
+            <td>
+                <input type="text" id="decimal_point_character"></input>
+            </td>
+            <td>Must not be a digit character, must differ from thousands separator</td>
+        </tr>
+        <tr>
+            <td>Thousands Separator</td>
+            <td>
+                <input type="text" id="thousands_separator"></input>
+            </td>
+            <td>Must not be a digit character, must differ from decimal point</td>
+        </tr>
+        <tr>
+            <td>Tab Width</td>
+            <td>
+                <input type="text" id="tab_width"></input>
+            </td>
+            <td>Must be a whole number greater than 0</td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="buttons">
+    <button id="ok">OK</button>
+    <button id="defaults">Defaults</button>
+    <button id="cancel">Cancel</button>
+</div>
+
+<script src="src/settings_ui.js"></script>
+</body>
+</html>

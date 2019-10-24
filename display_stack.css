@@ -1,0 +1,50 @@
+button {
+    margin-top: 2em;
+    margin-left: 0.5em;
+
+    width: 10em;
+    height: 1.5em;
+    font-family: Lucida Console, Courier, monospace;
+    font-size: medium;
+
+    -webkit-user-select:none;
+}
+
+li>pre {
+    font-family: Lucida Console, Courier, monospace;
+    font-size: large;
+
+    -webkit-user-select: text;
+}
+
+#stack_list {
+    width: calc(100vw - 1em);
+    height: calc(100vh - 5em);
+
+    list-style-type: none;
+
+    padding-left: 0;
+
+    overflow-x: auto;
+    overflow-y: auto;
+
+    margin: 0.5em;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+li {
+    width: calc(100vw - 1em);
+
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+
+    padding: 0.25em;
+
+    font-family: Lucida Console, Courier, monospace;
+    font-size: large;
+}
