@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:width="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="index.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <title id="title"></title>
+</head>
+<body>
+
+<div id="main_div">
+    <div id="left_and_right_columns">
+        <span id="left_column" class="box">
+            <div>
+                <input type="text" id="topLine" class="top-line" autofocus="autofocus"/>
+            </div>
+            <div id="spacer"></div>
+            <div>
+                <ul id="stack" class="stack">
+                </ul>
+            </div>
+            <table border="0" cellpadding="0" class="table-column-1">
+                <tr>
+                    <td>
+                        <!-- predefined buttons -->
+                        <table border="0" cellpadding="0" class="table-predefined-buttons">
+                            <tr>
+                                <td>
+                                    <button id="drop" class="predefined-wide-button">Drop</button>
+                                </td>
+                                <td>
+                                    <button id="swap" class="predefined-wide-button">Swap</button>
+                                </td>
+                                <td>
+                                    <button id="clear_entry" class="predefined-wide-button">Clr Ent</button>
+                                </td>
+                                <td>
+                                    <button id="clear_all" class="predefined-wide-button">Clr All</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button id="square_root" class="predefined-wide-button">√x</button>
+                                </td>
+                                <td>
+                                    <button id="change_sign" class="predefined-wide-button">+/-</button>
+                                </td>
+                                <td>
+                                    <button id="fix" class="predefined-wide-button">Fix</button>
+                                </td>
+                                <td>
+                                    <button id="float" class="predefined-wide-button">Float</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button id="scientific_notation" class="predefined-wide-button">Sci Not</button>
+                                </td>
+                                <td>
+                                    <button id="reciprocal" class="predefined-wide-button">1 / x</button>
+                                </td>
+                                <td>
+                                    <button id="string" class="predefined-wide-button">String</button>
+                                </td>
+                                <td>
+                                    <button id="factorial" class="predefined-wide-button">x!</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button id="array_to_stack" class="predefined-wide-button">[...] →</button>
+                                </td>
+                                <td>
+                                    <button id="stack_to_array" class="predefined-wide-button">→ [...]</button>
+                                </td>
+                                <td>
+                                    <button id="top_x_values_to_array" class="predefined-wide-button">x → [...]
+                                    </button>
+                                </td>
+                                <td>
+                                    <button id="store_variable" class="predefined-wide-button">Store</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button id="load_variable" class="predefined-wide-button">Retrieve</button>
+                                </td>
+                                <td>
+                                    <button id="delete_variable" class="predefined-wide-button">Delete</button>
+                                </td>
+                                <td>
+                                    <button id="delete_all_variables" class="predefined-wide-button">Clear</button>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </table>
+                        <table border="0" cellpadding="0">
+                            <tr>
+                                <td>
+                                    <table border="0" cellpadding="0">
+                                        <tr>
+                                            <td>
+                                                <button id="button_7" class="predefined-button">7</button>
+                                            </td>
+                                            <td>
+                                                <button id="button_8" class="predefined-button">8</button>
+                                            </td>
+                                            <td>
+                                                <button id="button_9" class="predefined-button">9</button>
+                                            </td>
+                                            <td>
+                                                <div class="button_spacer"></div>
+                                            </td>
+                                            <td>
+                                                <button id="divide" class="predefined-button">÷</button>
+                                            </td>
+                                            <td>
+                                                <div class="button_spacer"></div>
+                                            </td>
+                                            <td>
+                                                <button id="raise" class="predefined-button">y<sup>x</sup></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button id="button_4" class="predefined-button">4</button>
+                                            </td>
+                                            <td>
+                                                <button id="button_5" class="predefined-button">5</button>
+                                            </td>
+                                            <td>
+                                                <button id="button_6" class="predefined-button">6</button>
+                                            </td>
+                                            <td>
+                                                <div class="button_spacer"></div>
+                                            </td>
+                                            <td>
+                                                <button id="multiply" class="predefined-button">×</button>
+                                            </td>
+                                            <td>
+                                                <div class="button_spacer"></div>
+                                            </td>
+                                            <td>
+                                                <button id="percent" class="predefined-button">%</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button id="button_1" class="predefined-button">1</button>
+                                            </td>
+                                            <td>
+                                                <button id="button_2" class="predefined-button">2</button>
+                                            </td>
+                                            <td>
+                                                <button id="button_3" class="predefined-button">3</button>
+                                            </td>
+                                            <td>
+                                                <div class="button_spacer"></div>
+                                            </td>
+                                            <td>
+                                                <button id="subtract" class="predefined-button">−</button>
+                                            </td>
+                                            <td>
+                                                <div class="button_spacer"></div>
+                                            </td>
+                                            <td>
+                                                <button id="square" class="predefined-button">x<sup>2</sup></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button id="button_0" class="predefined-button">0</button>
+                                            </td>
+                                            <td>
+                                                <button id="decimal_point" class="predefined-button">.</button>
+                                            </td>
+                                            <td>
+                                                <button id="backspace" class="predefined-button">←</button>
+                                            </td>
+                                            <td>
+                                                <div class="button_spacer"></div>
+                                            </td>
+                                            <td>
+                                                <button id="add" class="predefined-button">+</button>
+                                            </td>
+                                            <td>
+                                                <div class="button_spacer"></div>
+                                            </td>
+                                            <td>
+                                                <button id="pi" class="predefined-button">π</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <button id="enter" class="enter-button">E<br/>n<br/>t<br/>e<br/>r</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </span>
+        <span id="right_column" class="box">
+            <div class="category-row">
+                <label id="category_label" for="category" title="Category:">Category:</label>
+                <select id="category" class="select-category"></select>
+            </div>
+            <table border="0" cellpadding="0" class="custom_buttons_table">
+                <tr>
+                    <td>
+                    </td>
+                    <td class="category-and-function-buttons-td" valign="top" align="left">
+                        <!-- column 2 -->
+                        <div class="category-and-function-buttons">
+                            <div class="function-button-div">
+                                <table border="0" id="function_buttons" class="function-table">
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </span>
+    </div>
+</div>
+
+<div id="bottom_section">
+    <div id="bottom_section_row">
+        <span id="bottom_buttons">
+                <button id="edit" class="bottom-button">Edit</button>
+                <button id="cancel" class="bottom-button" disabled>Cancel</button>
+                <button id="settings" class="bottom-button">Settings</button>
+                <button id="log" class="bottom-button">Log</button>
+        </span>
+
+        <!-- margins don't apply to display: table -->
+        <span id="table_spacer">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+        <span id="error"></span>
+    </div>
+</div>
+
+<script src="src/index.js"></script>
+</body>
+</html>

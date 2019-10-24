@@ -1,0 +1,18 @@
+.action-button {
+    width: 10em;
+}
+
+.button {
+    margin: 0 0 0 .5em;
+    font-size: .8em;
+    line-height: 1em;
+    padding: .6em 1em
+}
+
+#action_buttons {
+    margin-top: 2em;
+}
+
+#close {
+    margin-left: 3em;
+}

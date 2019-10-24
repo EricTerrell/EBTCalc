@@ -1,0 +1,14 @@
+#license_terms {
+    width: 100%;
+    height: calc(100vh - 10em);
+
+    overflow-y: auto;
+}
+
+#action_buttons {
+    margin-top: 2em;
+}
+
+#ok {
+    margin-top: 2em;
+}

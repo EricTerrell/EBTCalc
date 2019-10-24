@@ -1,0 +1,34 @@
+#textbox {
+    width: 20em;
+    font-family: Lucida Console, Courier, monospace;
+    font-size: medium;
+}
+
+#dropdown {
+    width: 20em;
+    font-family: Lucida Console, Courier, monospace;
+    font-size: medium;
+}
+
+#button_table {
+    margin-top: 1em;
+}
+
+#line_1, #line_2 {
+    margin-top: 1em;
+}
+
+.button {
+    margin: 0 0 0 .5em;
+    font-size: .8em;
+    line-height: 1em;
+    padding: .6em 1em;
+
+    -webkit-user-select:none;
+}
+
+#specify_variable_label,
+#dropdown_radio_button,
+#text_radio_button {
+    -webkit-user-select:none;
+}
