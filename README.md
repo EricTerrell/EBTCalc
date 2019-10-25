@@ -10,6 +10,12 @@ EBTCalc (Desktop)
 
 &#169; Copyright 2019, [`Eric Bergman-Terrell`](https://www.ericbt.com)
 
+# Screenshots
+
+![`EBTCalc Screenshot`](https://www.ericbt.com/uploaded_images/ebtcalc_github.png "EBTCalc Screenshot, Main Window")
+
+![`EBTCalc Screenshot`](https://www.ericbt.com/uploaded_images/ebtcalc_github_2.png "EBTCalc Screenshot, Edit Window")
+
 # Links
 
 * [`website`](https://www.ericbt.com/ebtcalc_electron)
