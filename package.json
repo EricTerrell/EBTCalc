@@ -1,6 +1,6 @@
 {
   "name": "EBTCalc",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "RPN Calculator",
   "main": "src/main.js",
   "scripts": {
