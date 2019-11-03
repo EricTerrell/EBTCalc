@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:width="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="check_for_updates.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <title id="title">Check for Updates</title>
+</head>
+<body>
+    <div>
+        <p id="app_and_version"></p>
+        <p>&#169; Copyright 2019, Eric Bergman-Terrell</p>
+        <a id="website_link" class="link"></a>
+    </div>
+
+    <div id="current_version">
+        <p>You are running the most recent version of EBTCalc.</p>
+    </div>
+
+    <div id="obsolete_version">
+        <p>There is a more recent version of EBTCalc available. Click the Download button to download it.</p>
+    </div>
+
+    <div id="action_buttons">
+            <button id="download" class="action-button button" disabled>Download</button>
+            <button id="donate" class="action-button button">Donate</button>
+            <button id="close" class="action-button button">Close</button>
+    </div>
+
+    <script src="src/check_for_updates.js"></script>
+</body>
+</html>

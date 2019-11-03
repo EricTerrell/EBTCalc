@@ -26,12 +26,15 @@ const {Menu, shell} = require('electron');
 const WindowUtils = require('../lib/windowUtils');
 const OSUtils = require('../lib/osUtils');
 const package = require('../package');
+const {checkVersion} = require('../lib/checkVersion');
+const files = require('../lib/files');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 let aboutEnabled = true;
+let checkForUpdatesEnabled = true;
 
 function createMenus(window) {
     const template = [
@@ -53,6 +56,12 @@ function createMenus(window) {
                 },
                 {
                     label: 'Visit EricBT.com', click() { visitEricBT(); }
+                },
+                {
+                    type: StringLiterals.MENU_SEPARATOR
+                },
+                {
+                    label: 'Check for Updates', click() { checkForUpdates(); }
                 },
                 {
                     type: StringLiterals.MENU_SEPARATOR
@@ -136,6 +145,12 @@ function createWindow() {
     });
 
     createMenus(mainWindow);
+
+    const settings = files.getSettings();
+
+    if (settings.checkForUpdates) {
+        checkVersion(errorCallback, notEqualsCallback, equalsCallback);
+    }
 }
 
 // This method will be called when Electron has finished
@@ -192,6 +207,46 @@ function visitEBTCalc() {
     shell.openExternal(package.config.ebtCalcUrl);
 }
 
+function checkForUpdates() {
+    if (checkForUpdatesEnabled) {
+        checkForUpdatesEnabled = false;
+
+        const windowId = 'check_for_updates';
+
+        const windowInfo = WindowInfo.loadWindowInfo(windowId);
+
+        const checkForUpdatesWindow = new BrowserWindow({
+            width: windowInfo.width,
+            height: windowInfo.height,
+            parent: mainWindow,
+            modal: false,
+            x: windowInfo.x,
+            y: windowInfo.y,
+            webPreferences: {
+                nodeIntegration: true,
+                preload: path.join(__dirname, 'preload.js')
+            }
+        });
+
+        WindowUtils.disableMenus(checkForUpdatesWindow);
+
+        // and load the index.html of the app.
+        checkForUpdatesWindow.loadFile('check_for_updates.html');
+
+        checkForUpdatesWindow.on(StringLiterals.RESIZE, (event) => {
+            WindowInfo.saveWindowInfo(windowId, event.sender);
+        });
+
+        checkForUpdatesWindow.on(StringLiterals.MOVE, (event) => {
+            WindowInfo.saveWindowInfo(windowId, event.sender);
+        });
+
+        checkForUpdatesWindow.on(StringLiterals.CLOSE, () => {
+            checkForUpdatesEnabled = true;
+        });
+    }
+}
+
 function about() {
     if (aboutEnabled) {
         aboutEnabled = false;
@@ -230,6 +285,20 @@ function about() {
             aboutEnabled = true;
         });
     }
+}
+
+function errorCallback() {
+    console.log('errorCallback');
+}
+
+function notEqualsCallback() {
+    console.log('notEqualsCallback');
+
+    checkForUpdates();
+}
+
+function equalsCallback() {
+    console.log('equalsCallback');
 }
 
 module.exports = {notifySourceCodeChanged, notifySettingsChanged};
