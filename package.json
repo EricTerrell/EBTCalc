@@ -1,6 +1,6 @@
 {
   "name": "EBTCalc",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "RPN Calculator",
   "main": "src/main.js",
   "scripts": {
@@ -17,7 +17,9 @@
     "donateUrl": "https://www.EricBT.com/ebtcalc_electron/donate",
     "onLineHelpUrl": "https://www.ericbt.com/ebtcalc_electron/help",
     "submitFeedback": "mailto:EBTCalc@EricBT.com?subject=EBTCalc Feedback",
-    "ebtCalcUrl": "https://play.google.com/store/apps/details?id=com.ericbt.rpncalcpaid"
+    "ebtCalcUrl": "https://play.google.com/store/apps/details?id=com.ericbt.rpncalcpaid",
+    "downloadUrl": "https://www.EricBT.com/ebtcalc_electron/download",
+    "versionFileUrl": "https://ericbt.com/versions/ebtcalc_desktop.txt"
   },
   "repository": "https://github.com/EricTerrell/EBTCalcDesktop",
   "keywords": [],

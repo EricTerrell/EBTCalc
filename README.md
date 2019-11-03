@@ -1,6 +1,6 @@
 # EBTCalc for Windows, Linux, and Mac OSX
 
-EBTCalc (Desktop) is a Reverse Polish Notation (RPN) calculator that can have custom buttons. Custom buttons are programmed in Javascript with a convenient editor. EBTCalc runs on Windows 10, OSX, and Linux. EBTCalc is open source.
+EBTCalc (Desktop) is a Reverse Polish Notation (RPN) calculator with custom buttons, programmed in Javascript, using a convenient editor. EBTCalc runs on Windows 10, OSX, and Linux. EBTCalc is open source.
 
 EBTCalc is built on the [`Electron`](https://github.com/electron/electron) framework.
 

@@ -12,3 +12,7 @@
 #ok {
     margin-top: 2em;
 }
+
+* {
+    -webkit-user-select:none;
+}
