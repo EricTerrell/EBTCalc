@@ -36,12 +36,54 @@ let mainWindow;
 let aboutEnabled = true;
 let checkForUpdatesEnabled = true;
 
+wireUpUI();
+
+function wireUpUI() {
+    const gotLock = app.requestSingleInstanceLock();
+
+    if (!gotLock) {
+        app.quit();
+    } else {
+        app.on('second-instance', (event, commandLine, workingDirectory) => {
+            if (mainWindow) {
+                if (mainWindow.isMinimized()) {
+                    mainWindow.restore();
+                }
+
+                mainWindow.focus();
+            }
+        });
+    }
+
+    // This method will be called when Electron has finished
+    // initialization and is ready to create browser windows.
+    // Some APIs can only be used after this event occurs.
+    app.on(StringLiterals.READY, createWindow);
+
+    // Quit when all windows are closed.
+    app.on(StringLiterals.WINDOW_ALL_CLOSED, function () {
+        // On macOS it is common for applications and their menu bar
+        // to stay active until the user quits explicitly with Cmd + Q
+        if (process.platform !== StringLiterals.DARWIN) {
+            app.quit()
+        }
+    });
+
+    app.on(StringLiterals.ACTIVATE, function () {
+        // On macOS it's common to re-create a window in the app when the
+        // dock icon is clicked and there are no other windows open.
+        if (mainWindow === null) createWindow()
+    });
+
+    app.commandLine.appendSwitch('remote-debugging-port', '9222');
+}
+
 function createMenus(window) {
     const template = [
         {
             label: 'File',
             submenu: [
-                    OSUtils.isMac() ? { role: 'close' } : { role: 'quit' }
+                OSUtils.isMac() ? { role: 'close' } : { role: 'quit' }
             ]
         },
 
@@ -152,28 +194,6 @@ function createWindow() {
         checkVersion(errorCallback, notEqualsCallback, equalsCallback);
     }
 }
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on(StringLiterals.READY, createWindow);
-
-// Quit when all windows are closed.
-app.on(StringLiterals.WINDOW_ALL_CLOSED, function () {
-    // On macOS it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
-    if (process.platform !== StringLiterals.DARWIN) {
-        app.quit()
-    }
-});
-
-app.on(StringLiterals.ACTIVATE, function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (mainWindow === null) createWindow()
-});
-
-app.commandLine.appendSwitch('remote-debugging-port', '9222');
 
 function notifySourceCodeChanged() {
     console.info('notifySourceCodeChanged');
