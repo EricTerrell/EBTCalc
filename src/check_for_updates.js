@@ -35,7 +35,7 @@ const obsoleteVersion = document.querySelector('#obsolete_version');
 wireUpUI();
 
 function wireUpUI() {
-    document.querySelector('#app_and_version').innerText = `${AppInfo.getInfo.name} version ${AppInfo.getInfo.version} (BETA)`;
+    document.querySelector('#app_and_version').innerText = `${AppInfo.getInfo.name} version ${AppInfo.getInfo.version}`;
 
     closeButton.addEventListener(StringLiterals.CLICK, () => {
         window.close();

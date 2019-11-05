@@ -19,9 +19,10 @@
 */
 
 const {remote} = require('electron');
+const mainProcess = remote.require('./main');
 const shell = remote.shell;
 const path = require('path');
-const {config} = require('./package.json')
+const {config} = require('./package.json');
 
 const StringLiterals = require('./lib/stringLiterals');
 const AppInfo = require('./lib/appInfo');
@@ -42,7 +43,7 @@ function wireUpUI() {
     const title = document.querySelector('#title');
     title.innerText = `About ${AppInfo.getInfo.name}`;
 
-    document.querySelector('#app_and_version').innerText = `${AppInfo.getInfo.name} version ${AppInfo.getInfo.version} (BETA)`;
+    document.querySelector('#app_and_version').innerText = `${AppInfo.getInfo.name} version ${AppInfo.getInfo.version}`;
 
     closeButton.addEventListener(StringLiterals.CLICK, () => {
         window.close();
@@ -72,6 +73,10 @@ function wireUpUI() {
 
     document.querySelector('#feedback').addEventListener(StringLiterals.CLICK, () => {
         shell.openExternal(config.submitFeedback);
+    });
+
+    document.querySelector('#check_for_updates').addEventListener(StringLiterals.CLICK, () => {
+        mainProcess.checkForUpdates();
     });
 }
 

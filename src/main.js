@@ -25,7 +25,7 @@ const WindowInfo = require('../lib/windowInfo');
 const {Menu, shell} = require('electron');
 const WindowUtils = require('../lib/windowUtils');
 const OSUtils = require('../lib/osUtils');
-const package = require('../package');
+const pkg = require('../package');
 const {checkVersion} = require('../lib/checkVersion');
 const files = require('../lib/files');
 
@@ -42,9 +42,13 @@ function wireUpUI() {
     const gotLock = app.requestSingleInstanceLock();
 
     if (!gotLock) {
+        console.info(`wireUpUI: restricting app to single instance - stopping this instance`);
+
         app.quit();
     } else {
-        app.on('second-instance', (event, commandLine, workingDirectory) => {
+        app.on(StringLiterals.SECOND_INSTANCE, (event, commandLine, workingDirectory) => {
+            console.info(`wireUpUI: ${StringLiterals.SECOND_INSTANCE}`);
+
             if (mainWindow) {
                 if (mainWindow.isMinimized()) {
                     mainWindow.restore();
@@ -53,29 +57,29 @@ function wireUpUI() {
                 mainWindow.focus();
             }
         });
+
+        // This method will be called when Electron has finished
+        // initialization and is ready to create browser windows.
+        // Some APIs can only be used after this event occurs.
+        app.on(StringLiterals.READY, createWindow);
+
+        // Quit when all windows are closed.
+        app.on(StringLiterals.WINDOW_ALL_CLOSED, function () {
+            // On macOS it is common for applications and their menu bar
+            // to stay active until the user quits explicitly with Cmd + Q
+            if (process.platform !== StringLiterals.DARWIN) {
+                app.quit()
+            }
+        });
+
+        app.on(StringLiterals.ACTIVATE, function () {
+            // On macOS it's common to re-create a window in the app when the
+            // dock icon is clicked and there are no other windows open.
+            if (mainWindow === null) createWindow()
+        });
+
+        app.commandLine.appendSwitch('remote-debugging-port', '9222');
     }
-
-    // This method will be called when Electron has finished
-    // initialization and is ready to create browser windows.
-    // Some APIs can only be used after this event occurs.
-    app.on(StringLiterals.READY, createWindow);
-
-    // Quit when all windows are closed.
-    app.on(StringLiterals.WINDOW_ALL_CLOSED, function () {
-        // On macOS it is common for applications and their menu bar
-        // to stay active until the user quits explicitly with Cmd + Q
-        if (process.platform !== StringLiterals.DARWIN) {
-            app.quit()
-        }
-    });
-
-    app.on(StringLiterals.ACTIVATE, function () {
-        // On macOS it's common to re-create a window in the app when the
-        // dock icon is clicked and there are no other windows open.
-        if (mainWindow === null) createWindow()
-    });
-
-    app.commandLine.appendSwitch('remote-debugging-port', '9222');
 }
 
 function createMenus(window) {
@@ -127,7 +131,7 @@ function createMenus(window) {
                     type: StringLiterals.MENU_SEPARATOR
                 },
                 {
-                    label: `About ${package.name}`, click() { about(); }
+                    label: `About ${pkg.name}`, click() { about(); }
                 }
             ]
         }
@@ -208,23 +212,23 @@ function notifySettingsChanged() {
 }
 
 function onLineHelp() {
-    shell.openExternal(package.config.onLineHelpUrl);
+    shell.openExternal(pkg.config.onLineHelpUrl);
 }
 
 function visitEricBT() {
-    shell.openExternal(package.config.websiteUrl);
+    shell.openExternal(pkg.config.websiteUrl);
 }
 
 function donate() {
-    shell.openExternal(package.config.donateUrl);
+    shell.openExternal(pkg.config.donateUrl);
 }
 
 function feedback() {
-    shell.openExternal(package.config.submitFeedback);
+    shell.openExternal(pkg.config.submitFeedback);
 }
 
 function visitEBTCalc() {
-    shell.openExternal(package.config.ebtCalcUrl);
+    shell.openExternal(pkg.config.ebtCalcUrl);
 }
 
 function checkForUpdates() {
@@ -321,4 +325,4 @@ function equalsCallback() {
     console.log('equalsCallback');
 }
 
-module.exports = {notifySourceCodeChanged, notifySettingsChanged};
+module.exports = {notifySourceCodeChanged, notifySettingsChanged, checkForUpdates};
