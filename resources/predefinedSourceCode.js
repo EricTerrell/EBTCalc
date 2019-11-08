@@ -487,3 +487,81 @@ class Developer {
         return pd.pd.xml(xml, true);
     }
 }
+
+class ___Graph {
+    constructor(type, data, options) {
+        this.type = type;
+        this.data = data;
+        this.options = options;
+    }
+
+    static render(f, minX, maxX, interval, dataSetName = 'f(x)', title='Graph', xAxisLabel = 'X', yAxisLabel = 'Y', xAxisType = 'linear', yAxisType = 'linear') {
+        const type = "line";
+
+        // The data for our dataset
+        const data = {
+            labels: [],
+            datasets: [
+                {
+                    label: dataSetName,
+                    backgroundColor: "rgb(255, 99, 132)",
+                    borderColor: "rgb(255, 99, 132)",
+                    fill: false,
+                    lineTension: 0,
+                    data: []
+                }
+            ]
+        };
+
+        for (let x = minX; x <= maxX; x += interval) {
+            data.labels.push(`${x}`);
+            data.datasets[0].data.push(f(x));
+        }
+
+        const options = {
+            responsive: true,
+            title: {
+                display: true,
+                text: title
+            },
+            tooltips: {
+                mode: "index",
+                intersect: false
+            },
+            hover: {
+                mode: "nearest",
+                intersect: true
+            },
+            scales: {
+                xAxes: [
+                    {
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: "X"
+                        }
+                    }
+                ],
+                yAxes: [
+                    {
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Y"
+                        }
+                    }
+                ]
+            }
+        };
+
+        if (xAxisType !== 'linear') {
+            options.scales.xAxes[0].type = xAxisType;
+        }
+
+        if (yAxisType !== 'linear') {
+            options.scales.yAxes[0].type = yAxisType;
+        }
+
+        return new ___Graph(type, data, options);
+    }
+}

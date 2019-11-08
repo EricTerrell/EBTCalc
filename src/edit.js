@@ -25,6 +25,7 @@ const SelectUtils = require('./lib/selectUtils');
 const StringUtils = require('./lib/stringUtils');
 const Constants = require('./lib/constants');
 const WindowUtils = require('./lib/windowUtils');
+const WindowInfo = require('./lib/windowInfo');
 const {remote} = require('electron');
 const { dialog } = require('electron').remote;
 const ipc = require('electron').ipcRenderer;
@@ -32,6 +33,7 @@ const path = require('path');
 const Files = require('./lib/files');
 const prettier = require('prettier');
 const Settings = require('./lib/settings');
+const {addContextMenu} = require('./lib/htmlElementUtils');
 
 let settings = Files.getSettings();
 
@@ -90,12 +92,17 @@ function displayCursorPos() {
 
 function goToLineUI() {
     function createWindow(parentWindow) {
+        const windowId = 'prompt';
+        const windowInfo = WindowInfo.loadWindowInfo(windowId);
+
         const window = new remote.BrowserWindow({
-            width: 400,
-            height: 225,
-            parent: parentWindow,
-            modal: true,
-            resizable: false,
+            width: windowInfo.width,
+            height: windowInfo.height,
+            x: windowInfo.x,
+            y: windowInfo.y,
+            parent: remote.getCurrentWindow(),
+            modal: false,
+            resizable: true,
             webPreferences: {
                 nodeIntegration: true,
                 preload: path.join(__dirname, '../src/preload.js')
@@ -106,6 +113,14 @@ function goToLineUI() {
 
         const theUrl = `file:///${contentPath}`;
         window.loadURL(theUrl);
+
+        window.on(StringLiterals.RESIZE, (event) => {
+            WindowInfo.saveWindowInfo(windowId, event.sender);
+        });
+
+        window.on(StringLiterals.MOVE, (event) => {
+            WindowInfo.saveWindowInfo(windowId, event.sender);
+        });
 
         WindowUtils.disableMenus(window);
 
@@ -310,6 +325,9 @@ function allowClose() {
 }
 
 function wireUpUI() {
+    addContextMenu(sourceCode);
+    addContextMenu(searchText);
+
     sourceCode.value = Files.getUserSourceCode();
     previousSourceCodeValue = sourceCode.value;
 
