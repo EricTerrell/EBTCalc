@@ -18,16 +18,13 @@
     along with EBTCalc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const {remote} = require('electron');
 const ipc = require('electron').ipcRenderer;
 const serializerDeserializer = require('./lib/serializerDeserializer');
-const path = require('path');
 const StringLiterals = require('./lib/stringLiterals');
 const WindowUtils = require('./lib/windowUtils');
 const Files = require('./lib/files');
 const Settings = require('./lib/settings');
 const BigNumberUtils = require('./lib/bigNumberUtils');
-const WindowInfo = require('./lib/windowInfo');
 const AppInfo = require('./lib/appInfo');
 
 const ValueFormatter = require('./lib/valueFormatter');
@@ -68,125 +65,6 @@ BigNumberUtils.configure();
 wireUpUI();
 
 function wireUpUI() {
-    function edit() {
-        const windowId = 'edit';
-        const windowInfo = WindowInfo.loadWindowInfo(windowId);
-
-        const window = new remote.BrowserWindow({
-            width: windowInfo.width,
-            height: windowInfo.height,
-            x: windowInfo.x,
-            y: windowInfo.y,
-            parent: remote.getCurrentWindow(),
-            modal: false,
-            resizable: true,
-            webPreferences: {
-                nodeIntegration: true,
-                preload: path.join(__dirname, './src/preload.js')
-            }
-        });
-
-        WindowUtils.disableMenus(window);
-
-        const theUrl = `file:///${__dirname}/edit.html`;
-        window.loadURL(theUrl);
-
-        editButton.disabled = true;
-
-        window.webContents.once(StringLiterals.DESTROYED, (event) => {
-            editButton.disabled = false;
-        });
-
-        window.on(StringLiterals.RESIZE, (event) => {
-            WindowInfo.saveWindowInfo(windowId, event.sender);
-        });
-
-        window.on(StringLiterals.MOVE, (event) => {
-            WindowInfo.saveWindowInfo(windowId, event.sender);
-        });
-    }
-
-    function log() {
-        const windowId = 'log';
-        const windowInfo = WindowInfo.loadWindowInfo(windowId);
-
-        const window = new remote.BrowserWindow({
-            width: windowInfo.width,
-            height: windowInfo.height,
-            x: windowInfo.x,
-            y: windowInfo.y,
-            parent: remote.getCurrentWindow(),
-            modal: false,
-            resizable: true,
-            webPreferences: {
-                nodeIntegration: true,
-                preload: path.join(__dirname, './src/preload.js')
-            }
-        });
-
-        WindowUtils.disableMenus(window);
-
-        const theUrl = `file:///${__dirname}/log.html`;
-        window.loadURL(theUrl);
-
-        logButton.disabled = true;
-
-        window.webContents.once(StringLiterals.DESTROYED, () => {
-            logButton.disabled = false;
-            logWindow = null;
-        });
-
-        window.on(StringLiterals.RESIZE, (event) => {
-            WindowInfo.saveWindowInfo(windowId, event.sender);
-        });
-
-        window.on(StringLiterals.MOVE, (event) => {
-            WindowInfo.saveWindowInfo(windowId, event.sender);
-        });
-
-        window.on(StringLiterals.DESTROYED, (event) => {
-            graphWindow = null;
-        });
-
-        return window;
-    }
-
-    function licenseTerms() {
-        const windowId = 'license_terms';
-        const windowInfo = WindowInfo.loadWindowInfo(windowId);
-
-        const window = new remote.BrowserWindow({
-            width: windowInfo.width,
-            height: windowInfo.height,
-            x: windowInfo.x,
-            y: windowInfo.y,
-            parent: remote.getCurrentWindow(),
-            modal: false,
-            resizable: true,
-            webPreferences: {
-                nodeIntegration: true,
-                preload: path.join(__dirname, './src/preload.js')
-            }
-        });
-
-        WindowUtils.disableMenus(window);
-
-        const contentPath = path.join(__dirname, './license_terms.html');
-
-        const theUrl = `file:///${contentPath}`;
-        window.loadURL(theUrl);
-
-        window.on(StringLiterals.RESIZE, (event) => {
-            WindowInfo.saveWindowInfo(windowId, event.sender);
-        });
-
-        window.on(StringLiterals.MOVE, (event) => {
-            WindowInfo.saveWindowInfo(windowId, event.sender);
-        });
-
-        return window;
-    }
-
     require('electron').ipcRenderer.on(StringLiterals.SETTINGS_CHANGED, () => {
         console.info('index.js: settings changed');
 
@@ -202,7 +80,9 @@ function wireUpUI() {
     category.renderCustomButtonUI();
 
     editButton.addEventListener(StringLiterals.CLICK, () => {
-        edit();
+        editButton.disabled = true;
+
+        WindowUtils.createWindow('edit', () => {editButton.disabled = false});
     });
 
     settingsButton.addEventListener(StringLiterals.CLICK, () => {
@@ -216,7 +96,14 @@ function wireUpUI() {
     });
 
     logButton.addEventListener(StringLiterals.CLICK, () => {
-        logWindow = log();
+        logButton.disabled = true;
+
+        const onDestroyedCallback = function() {
+            logButton.disabled = false;
+            logWindow = null;
+        };
+
+        logWindow = WindowUtils.createWindow('log', onDestroyedCallback);
     });
 
     this.window.onbeforeunload = (event) => {
@@ -234,7 +121,7 @@ function wireUpUI() {
     const licenseTermsData = Files.getLicenseTerms();
 
     if (!licenseTermsData.userAccepted) {
-        licenseTerms();
+        WindowUtils.createWindow('license_terms');
     }
 }
 
@@ -335,35 +222,7 @@ function displayLogMessage(message) {
 
 function graph(whatToGraph) {
     if (!graphWindow || graphWindow.isDestroyed()) {
-        const windowId = 'graph';
-        const windowInfo = WindowInfo.loadWindowInfo(windowId);
-
-        graphWindow = new remote.BrowserWindow({
-            width: windowInfo.width,
-            height: windowInfo.height,
-            x: windowInfo.x,
-            y: windowInfo.y,
-            parent: remote.getCurrentWindow(),
-            modal: false,
-            resizable: true,
-            webPreferences: {
-                nodeIntegration: true,
-                preload: path.join(__dirname, './src/preload.js')
-            }
-        });
-
-        WindowUtils.disableMenus(graphWindow);
-
-        const theUrl = `file:///${__dirname}/graph.html`;
-        graphWindow.loadURL(theUrl);
-
-        graphWindow.on(StringLiterals.RESIZE, (event) => {
-            WindowInfo.saveWindowInfo(windowId, event.sender);
-        });
-
-        graphWindow.on(StringLiterals.MOVE, (event) => {
-            WindowInfo.saveWindowInfo(windowId, event.sender);
-        });
+        graphWindow = WindowUtils.createWindow('graph');
     }
 
     const numericalWindowId = graphWindow.id;

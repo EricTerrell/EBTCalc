@@ -25,11 +25,9 @@ const SelectUtils = require('./lib/selectUtils');
 const StringUtils = require('./lib/stringUtils');
 const Constants = require('./lib/constants');
 const WindowUtils = require('./lib/windowUtils');
-const WindowInfo = require('./lib/windowInfo');
 const {remote} = require('electron');
 const { dialog } = require('electron').remote;
 const ipc = require('electron').ipcRenderer;
-const path = require('path');
 const Files = require('./lib/files');
 const prettier = require('prettier');
 const Settings = require('./lib/settings');
@@ -58,6 +56,7 @@ const matchCase = document.querySelector('#match_case');
 
 let preventWindowClose = true;
 let previousSourceCodeValue;
+let goToLineWindow;
 
 // If user uses the Go To Line feature, keep track of it so that the next keystroke doesn't replace the entire
 // selection.
@@ -91,43 +90,9 @@ function displayCursorPos() {
 }
 
 function goToLineUI() {
-    function createWindow(parentWindow) {
-        const windowId = 'prompt';
-        const windowInfo = WindowInfo.loadWindowInfo(windowId);
-
-        const window = new remote.BrowserWindow({
-            width: windowInfo.width,
-            height: windowInfo.height,
-            x: windowInfo.x,
-            y: windowInfo.y,
-            parent: remote.getCurrentWindow(),
-            modal: false,
-            resizable: true,
-            webPreferences: {
-                nodeIntegration: true,
-                preload: path.join(__dirname, '../src/preload.js')
-            }
-        });
-
-        const contentPath = path.join(__dirname, './prompt.html');
-
-        const theUrl = `file:///${contentPath}`;
-        window.loadURL(theUrl);
-
-        window.on(StringLiterals.RESIZE, (event) => {
-            WindowInfo.saveWindowInfo(windowId, event.sender);
-        });
-
-        window.on(StringLiterals.MOVE, (event) => {
-            WindowInfo.saveWindowInfo(windowId, event.sender);
-        });
-
-        WindowUtils.disableMenus(window);
-
-        return window;
+    if (!goToLineWindow || goToLineWindow.isDestroyed()) {
+        goToLineWindow = WindowUtils.createWindow('prompt');
     }
-
-    const window = createWindow(remote.getCurrentWindow());
 
     ipc.removeAllListeners(StringLiterals.MAIN_WINDOW_CHANNEL);
     ipc.once(StringLiterals.MAIN_WINDOW_CHANNEL, (event, lineNumberString) => {
@@ -142,7 +107,7 @@ function goToLineUI() {
         userWentToLine = true;
     });
 
-    const windowId = window.id;
+    const windowId = goToLineWindow.id;
 
     const windowOptions = {
         title: 'Go to Line',
@@ -153,7 +118,7 @@ function goToLineUI() {
         defaultValue: StringLiterals.EMPTY_STRING
     };
 
-    window.webContents.once(StringLiterals.DID_FINISH_LOAD, () => {
+    goToLineWindow.webContents.once(StringLiterals.DID_FINISH_LOAD, () => {
         ipc.sendTo(windowId, StringLiterals.VARIABLE_WINDOW_CHANNEL, windowOptions);
     });
 }

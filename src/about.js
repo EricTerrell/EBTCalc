@@ -21,12 +21,10 @@
 const {remote} = require('electron');
 const mainProcess = remote.require('./main');
 const shell = remote.shell;
-const path = require('path');
 const {config} = require('./package.json');
 
 const StringLiterals = require('./lib/stringLiterals');
 const AppInfo = require('./lib/appInfo');
-const WindowInfo = require('./lib/windowInfo');
 const WindowUtils = require('./lib/windowUtils');
 
 const licenseTermsButton = document.querySelector('#license_terms');
@@ -64,7 +62,9 @@ function wireUpUI() {
     });
 
     licenseTermsButton.addEventListener(StringLiterals.CLICK, () => {
-        licenseTerms();
+        licenseTermsButton.disabled = true;
+
+        WindowUtils.createWindow('license_terms', () => {licenseTermsButton.disabled = false});
     });
 
     document.querySelector('#donate').addEventListener(StringLiterals.CLICK, () => {
@@ -78,46 +78,4 @@ function wireUpUI() {
     document.querySelector('#check_for_updates').addEventListener(StringLiterals.CLICK, () => {
         mainProcess.checkForUpdates();
     });
-}
-
-function licenseTerms() {
-    const windowId = 'license_terms';
-    const windowInfo = WindowInfo.loadWindowInfo(windowId);
-
-    const window = new remote.BrowserWindow({
-        width: windowInfo.width,
-        height: windowInfo.height,
-        x: windowInfo.x,
-        y: windowInfo.y,
-        parent: remote.getCurrentWindow(),
-        modal: false,
-        resizable: true,
-        webPreferences: {
-            nodeIntegration: true,
-            preload: path.join(__dirname, './src/preload.js')
-        }
-    });
-
-    WindowUtils.disableMenus(window);
-
-    const contentPath = path.join(__dirname, './license_terms.html');
-
-    const theUrl = `file:///${contentPath}`;
-    window.loadURL(theUrl);
-
-    licenseTermsButton.disabled = true;
-
-    window.webContents.once(StringLiterals.DESTROYED, () => {
-        licenseTermsButton.disabled = false;
-    });
-
-    window.on(StringLiterals.RESIZE, (event) => {
-        WindowInfo.saveWindowInfo(windowId, event.sender);
-    });
-
-    window.on(StringLiterals.MOVE, (event) => {
-        WindowInfo.saveWindowInfo(windowId, event.sender);
-    });
-
-    return window;
 }
