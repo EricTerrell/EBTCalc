@@ -19,6 +19,7 @@
 */
 
 const {remote} = require('electron');
+const ipc = require('electron').ipcRenderer;
 const serializerDeserializer = require('./lib/serializerDeserializer');
 const path = require('path');
 const StringLiterals = require('./lib/stringLiterals');
@@ -48,7 +49,7 @@ let variables = serializerDeserializer.serialize(new Map());
 let variableNames = [];
 
 const FunctionExecutor = require('./lib/functionExecutor');
-const functionExecutor = new FunctionExecutor(topLine, stack, errorText, valueFormatter, variables, variableNames, displayLogMessage.bind(this));
+const functionExecutor = new FunctionExecutor(topLine, stack, errorText, valueFormatter, variables, variableNames, displayLogMessage.bind(this), graph.bind(this));
 
 const Category = require('./lib/category');
 const category = new Category(functionExecutor, topLine, enableDisableFunctionButtons.bind(this));
@@ -60,7 +61,7 @@ const editButton = document.querySelector('#edit');
 const settingsButton = document.querySelector('#settings');
 const logButton = document.querySelector('#log');
 
-let logWindow;
+let logWindow, graphWindow;
 
 BigNumberUtils.configure();
 
@@ -141,6 +142,10 @@ function wireUpUI() {
 
         window.on(StringLiterals.MOVE, (event) => {
             WindowInfo.saveWindowInfo(windowId, event.sender);
+        });
+
+        window.on(StringLiterals.DESTROYED, (event) => {
+            graphWindow = null;
         });
 
         return window;
@@ -326,4 +331,45 @@ function displayLogMessage(message) {
     if (logWindow) {
         logWindow.webContents.send('log-message', message);
     }
+}
+
+function graph(whatToGraph) {
+    if (!graphWindow || graphWindow.isDestroyed()) {
+        const windowId = 'graph';
+        const windowInfo = WindowInfo.loadWindowInfo(windowId);
+
+        graphWindow = new remote.BrowserWindow({
+            width: windowInfo.width,
+            height: windowInfo.height,
+            x: windowInfo.x,
+            y: windowInfo.y,
+            parent: remote.getCurrentWindow(),
+            modal: false,
+            resizable: true,
+            webPreferences: {
+                nodeIntegration: true,
+                preload: path.join(__dirname, './src/preload.js')
+            }
+        });
+
+        WindowUtils.disableMenus(graphWindow);
+
+        const theUrl = `file:///${__dirname}/graph.html`;
+        graphWindow.loadURL(theUrl);
+
+        graphWindow.on(StringLiterals.RESIZE, (event) => {
+            WindowInfo.saveWindowInfo(windowId, event.sender);
+        });
+
+        graphWindow.on(StringLiterals.MOVE, (event) => {
+            WindowInfo.saveWindowInfo(windowId, event.sender);
+        });
+    }
+
+    const numericalWindowId = graphWindow.id;
+
+    graphWindow.webContents.once(StringLiterals.DID_FINISH_LOAD, () => {
+        console.info(`sending ${whatToGraph} to graph window`);
+        ipc.sendTo(numericalWindowId, StringLiterals.CHILD_WINDOW_CHANNEL, whatToGraph);
+    });
 }

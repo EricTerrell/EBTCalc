@@ -1,0 +1,13 @@
+#graph {
+    width: calc(100vw - 1em);
+    height: calc(100vh - 2em);
+}
+
+button {
+    width: 10em;
+    height: 1.5em;
+    font-family: Lucida Console, Courier, monospace;
+    font-size: medium;
+
+    -webkit-user-select:none;
+}

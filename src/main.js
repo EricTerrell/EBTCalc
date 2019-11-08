@@ -85,57 +85,73 @@ function wireUpUI() {
 function createMenus(window) {
     const template = [
         {
-            label: 'File',
+            label: '&File',
             submenu: [
-                OSUtils.isMac() ? { role: 'close' } : { role: 'quit' }
+                OSUtils.isMac() ? { role: 'close' } : { label: 'E&xit', role: 'quit' }
             ]
         },
-
         {
-            role: 'help',
+            label: 'Edit',
+            submenu: [
+                { role: 'undo' },
+                { type: 'separator' },
+                { role: 'cut' },
+                { role: 'copy' },
+                { role: 'paste' },
+                { role: 'selectall' }
+            ]
+        },
+        {
+            label: '&Help',
             submenu: [
                 {
-                    label: 'On-Line Help', click() { onLineHelp(); }
+                    label: 'On-Line &Help', click() { onLineHelp(); }
                 },
                 {
                     type: StringLiterals.MENU_SEPARATOR
                 },
                 {
-                    label: 'Visit EricBT.com', click() { visitEricBT(); }
+                    label: '&Visit EricBT.com', click() { visitEricBT(); }
                 },
                 {
                     type: StringLiterals.MENU_SEPARATOR
                 },
                 {
-                    label: 'Check for Updates', click() { checkForUpdates(); }
+                    label: 'Check for &Updates', click() { checkForUpdates(); }
                 },
                 {
                     type: StringLiterals.MENU_SEPARATOR
                 },
                 {
-                    label: 'Donate', click() { donate(); }
+                    label: '&Donate', click() { donate(); }
                 },
                 {
                     type: StringLiterals.MENU_SEPARATOR
                 },
                 {
-                    label: 'EBTCalc for Android', click() { visitEBTCalc(); }
+                    label: '&EBTCalc for Android', click() { visitEBTCalc(); }
                 },
                 {
                     type: StringLiterals.MENU_SEPARATOR
                 },
                 {
-                    label: 'Email Feedback', click() { feedback(); }
+                    label: 'Email &Feedback', click() { feedback(); }
                 },
                 {
                     type: StringLiterals.MENU_SEPARATOR
                 },
                 {
-                    label: `About ${pkg.name}`, click() { about(); }
+                    label: `&About ${pkg.name}`, click() { about(); }
                 }
             ]
         }
     ];
+
+    if (!OSUtils.isMac()) {
+        const editIndex = template.findIndex((element) => element.label === 'Edit');
+
+        delete template[editIndex];
+    }
 
     if (WindowUtils.displayCustomMenus()) {
         const menu = Menu.buildFromTemplate(template);

@@ -20,7 +20,8 @@
 
 const ipc = require('electron').ipcRenderer;
 const StringLiterals = require('./lib/stringLiterals.js');
-const { dialog } = require('electron').remote;
+const {dialog} = require('electron').remote;
+const {addContextMenu} = require('./lib/htmlElementUtils');
 
 const promptLabel = document.querySelector('#prompt_label');
 const title = document.querySelector('#title');
@@ -48,6 +49,8 @@ function wireUpUI(options) {
         window.close();
     }
 
+    addContextMenu(textBox);
+    
     ok.addEventListener(StringLiterals.CLICK, () => {
         if (textBox.value.search(new RegExp(options.regExString)) === 0) {
             submit();

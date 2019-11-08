@@ -1,7 +1,7 @@
 {
   "name": "EBTCalc",
-  "version": "0.0.3",
-  "description": "RPN Calculator",
+  "version": "0.0.4",
+  "description": "Programmable RPN Calculator",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
@@ -33,9 +33,10 @@
     "sinon": "^7.5.0"
   },
   "dependencies": {
-    "prettier": "1.18.2",
     "bignumber.js": "^9.0.0",
+    "chart.js": "^2.9.2",
     "esprima": "^4.0.1",
+    "prettier": "1.18.2",
     "pretty-data": "^0.40.0",
     "serialize-javascript": "^2.1.0"
   },
