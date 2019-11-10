@@ -25,7 +25,6 @@ const Files = require('./lib/files');
 const decimalPointCharacter = document.querySelector('#decimal_point_character');
 const thousandsSeparator = document.querySelector('#thousands_separator');
 const tabWidth = document.querySelector('#tab_width');
-const checkForUpdates = document.querySelector('#check_for_updates');
 
 const ok = document.querySelector('#ok');
 const cancel = document.querySelector('#cancel');
@@ -40,7 +39,6 @@ function wireUpUI() {
         settings.decimalPoint = decimalPointCharacter.value;
         settings.thousandsSeparator = thousandsSeparator.value;
         settings.tabWidth = Number.parseInt(tabWidth.value);
-        settings.checkForUpdates = checkForUpdates.checked;
 
         Files.saveSettings(settings);
 
@@ -50,7 +48,6 @@ function wireUpUI() {
     decimalPointCharacter.value = settings.decimalPoint;
     thousandsSeparator.value = settings.thousandsSeparator;
     tabWidth.value = settings.tabWidth;
-    checkForUpdates.checked = settings.checkForUpdates;
 
     decimalPointCharacter.focus();
 
@@ -68,7 +65,6 @@ function wireUpUI() {
         decimalPointCharacter.value = defaultSettings.decimalPoint;
         thousandsSeparator.value = defaultSettings.thousandsSeparator;
         tabWidth.value = defaultSettings.tabWidth.toString();
-        tabWidth.checked = defaultSettings.checkForUpdates;
 
         enableDisableOKButton();
     });
