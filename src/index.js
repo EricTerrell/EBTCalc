@@ -46,7 +46,9 @@ let variables = serializerDeserializer.serialize(new Map());
 let variableNames = [];
 
 const FunctionExecutor = require('./lib/functionExecutor');
-const functionExecutor = new FunctionExecutor(topLine, stack, errorText, valueFormatter, variables, variableNames, displayLogMessage.bind(this), graph.bind(this));
+const functionExecutor = new FunctionExecutor(topLine, stack, errorText, valueFormatter, variables, variableNames,
+    displayLogMessage.bind(this), graph.bind(this),
+    enableDisableFunctionButtons.bind(this));
 
 const Category = require('./lib/category');
 const category = new Category(functionExecutor, topLine, enableDisableFunctionButtons.bind(this));
@@ -143,16 +145,17 @@ function addMinMaxDataToPredefinedButtons() {
         {buttonId: 'stack_to_array', minParameters: 1},
         {buttonId: 'top_x_values_to_array', minParameters: 2},
         {buttonId: 'store_variable', minParameters: 1},
-        {buttonId: 'load_variable', minParameters: 0},
-        {buttonId: 'delete_variable', minParameters: 0},
-        {buttonId: 'delete_all_variables', minParameters: 0}
+        {buttonId: 'load_variable', minParameters: 0, minVariables: 1},
+        {buttonId: 'delete_variable', minParameters: 0, minVariables: 1},
+        {buttonId: 'delete_all_variables', minParameters: 0, minVariables: 1}
     ];
 
     minMaxInfo.forEach((element) => {
         document.querySelector(`#${element.buttonId}`).___requiredParameterInfo = {
             minParameters: element.minParameters,
             topLineNonBlank: element.topLineNonBlank,
-            maxParameters: Infinity
+            maxParameters: Infinity,
+            minVariables: element.minVariables
         }
     });
 }
@@ -192,12 +195,10 @@ function loadData() {
 }
 
 function enableDisableFunctionButtons() {
-    console.log(`index.js enableDisableFunctionButtons stackSize: ${stack.stackSize()} topLine: '${topLine.value}' topLine length: ${topLine.value.length}`);
-
     // If there is something in the top line, we count it as a stack item, since it will be automatically pushed.
     let stackSize = stack.stackSize() + (topLine.value.trim().length > 0 ? 1 : 0);
 
-    console.info(`enableDisableFunctionButtons stackSize=${stackSize}`);
+    console.info(`index.js enableDisableFunctionButtons stackSize=${stackSize} variables: ${JSON.stringify(variableNames)} topLine: '${topLine.value}' topLine length: ${topLine.value.length}`);
 
     const customButtons = document.querySelectorAll(`.${StringLiterals.CUSTOM_BUTTON}`);
     const builtInButtons = document.querySelectorAll(`.predefined-wide-button`);
@@ -209,6 +210,11 @@ function enableDisableFunctionButtons() {
                 button.disabled = topLine.value.length === 0;
             } else {
                 button.disabled = button.___requiredParameterInfo.minParameters > stackSize;
+
+                if (button.___requiredParameterInfo.minVariables && button.___requiredParameterInfo.minVariables > variableNames.length) {
+                    console.log(`disabling button ${button.id}`);
+                    button.disabled = true;
+                }
             }
         }
     });

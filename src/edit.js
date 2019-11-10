@@ -188,14 +188,20 @@ function wireUpButtons() {
     });
 
     sourceCode.addEventListener(StringLiterals.KEYUP, () => {
+        userWentToLine = false;
+
         displayCursorPos();
     });
 
     sourceCode.addEventListener(StringLiterals.MOUSEDOWN, () => {
+        userWentToLine = false;
+
         displayCursorPos();
     });
 
     sourceCode.addEventListener(StringLiterals.MOUSEUP, () => {
+        userWentToLine = false;
+
         displayCursorPos();
     });
 

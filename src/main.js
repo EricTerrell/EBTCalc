@@ -26,8 +26,6 @@ const {Menu, shell} = require('electron');
 const WindowUtils = require('../lib/windowUtils');
 const OSUtils = require('../lib/osUtils');
 const pkg = require('../package');
-const {checkVersion} = require('../lib/checkVersion');
-const files = require('../lib/files');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -207,12 +205,6 @@ function createWindow() {
     });
 
     createMenus(mainWindow);
-
-    const settings = files.getSettings();
-
-    if (settings.checkForUpdates) {
-        checkVersion(errorCallback, notEqualsCallback, equalsCallback);
-    }
 }
 
 function notifySourceCodeChanged() {
