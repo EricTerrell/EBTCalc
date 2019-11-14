@@ -159,7 +159,7 @@ function wireUpButtons() {
             parser.extract(sourceCode.value, StringLiterals.EMPTY_STRING);
         } catch (err) {
             errorLine = err.lineNumber;
-            errorColumn = err.column;
+            errorColumn = Math.max(1, err.column);
 
             goToError.disabled = false;
             errorPosition.innerText = `Syntax Error: ${err.lineNumber}:${err.column}`;
