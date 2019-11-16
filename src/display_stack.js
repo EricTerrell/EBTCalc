@@ -47,7 +47,8 @@ function wireUpUI(stackItems) {
         preItem.addEventListener(StringLiterals.CONTEXTMENU, (event) => {
             const menu = new Menu();
 
-            menu.append(new MenuItem({ label: 'Copy', click() { clipboard.writeText(preItem.innerText); } }));
+            menu.append(new MenuItem({ role: 'selectall' }));
+            menu.append(new MenuItem({ role: 'copy' }));
 
             if (!this.contextMenuActive) {
                 event.preventDefault();
