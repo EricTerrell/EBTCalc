@@ -85,15 +85,18 @@ describe("parser tests", () => {
 
         const comments = parser.extract(code, StringLiterals.EMPTY_STRING).comments;
 
-        expect(comments.length).to.equal(1);
-        expect(comments[0].type).to.equal('Line');
-        expect(comments[0].value).to.equal(' this is a line comment');
+        expect(comments.length).to.equal(2);
+
+        expect(comments[0].type).to.equal('Block');
+
+        expect(comments[1].type).to.equal('Line');
+        expect(comments[1].value).to.equal(' this is a line comment');
     });
 
     it('should find syntax error', () => {
         const filePath = path.join(__dirname, './scripts/syntaxError.js');
         const code = fs.readFileSync(filePath, StringLiterals.ENCODING);
 
-        expect(function() { parser.extract(code, StringLiterals.EMPTY_STRING) }).to.throw("Line 13: Unexpected token ?");
+        expect(function() { parser.extract(code, StringLiterals.EMPTY_STRING) }).to.throw("Line 33: Unexpected token ?");
     });
 });

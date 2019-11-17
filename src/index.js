@@ -27,6 +27,8 @@ const Settings = require('./lib/settings');
 const BigNumberUtils = require('./lib/bigNumberUtils');
 const AppInfo = require('./lib/appInfo');
 
+const VersionChecker = require('./lib/versionChecker');
+
 const ValueFormatter = require('./lib/valueFormatter');
 const valueFormatter = new ValueFormatter();
 
@@ -124,6 +126,8 @@ function wireUpUI() {
 
     if (!licenseTermsData.userAccepted) {
         WindowUtils.createWindow('license_terms');
+    } else if (Files.getSettings().checkForUpdates) {
+        VersionChecker.checkVersion();
     }
 }
 
