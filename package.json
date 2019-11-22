@@ -1,6 +1,6 @@
 {
   "name": "EBTCalc",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Programmable RPN Calculator",
   "main": "src/main.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "build-windows": "electron-packager . --icon=resources/calc.ico --out ../EBTCalc-build --overwrite --platform=win32 --asar",
     "build-mac": "electron-packager . --out ../EBTCalc-build --overwrite --platform=darwin --asar",
     "build-linux": "electron-packager . --icon=resources/calc.png --out ../EBTCalc-build --overwrite --platform=linux --asar",
-    "test": "mocha './unit/*.test.js'"
+    "test": "nyc mocha './unit/*.test.js'"
   },
   "config": {
     "githubUrl": "https://github.com/EricTerrell/EBTCalc",
@@ -36,6 +36,7 @@
     "bignumber.js": "^9.0.0",
     "chart.js": "^2.9.2",
     "esprima": "^4.0.1",
+    "nyc": "^14.1.1",
     "prettier": "1.18.2",
     "pretty-data": "^0.40.0",
     "serialize-javascript": "^2.1.0"

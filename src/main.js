@@ -121,7 +121,7 @@ function createMenus(window) {
                     type: StringLiterals.MENU_SEPARATOR
                 },
                 {
-                    label: '&Donate', click() { donate(); }
+                    label: '&Support EBTCalc Development', click() { donate(); }
                 },
                 {
                     type: StringLiterals.MENU_SEPARATOR
