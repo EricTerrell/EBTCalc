@@ -21,6 +21,8 @@
 const ipc = require('electron').ipcRenderer;
 const serializerDeserializer = require('./lib/serializerDeserializer');
 const StringLiterals = require('./lib/stringLiterals');
+const Constants = require('./lib/constants');
+
 const WindowUtils = require('./lib/windowUtils');
 const Files = require('./lib/files');
 const Settings = require('./lib/settings');
@@ -127,7 +129,9 @@ function wireUpUI() {
     if (!licenseTermsData.userAccepted) {
         WindowUtils.createWindow('license_terms');
     } else if (Files.getSettings().checkForUpdates) {
-        VersionChecker.checkVersion();
+        if (needToCheckVersion()) {
+            VersionChecker.checkVersion();
+        }
     }
 }
 
@@ -241,4 +245,21 @@ function graph(whatToGraph) {
         console.info(`sending ${whatToGraph} to graph window`);
         ipc.sendTo(numericalWindowId, StringLiterals.CHILD_WINDOW_CHANNEL, whatToGraph);
     });
+}
+
+function needToCheckVersion() {
+    const settings = Files.getSettings();
+
+    console.info(`needToCheckVersion: settings: ${JSON.stringify(settings)}`);
+
+    const lastVersionCheck = new Date(settings.lastVersionCheck).getTime();
+    const now = new Date().getTime();
+
+    const elapsedTimeDays = (now - lastVersionCheck) / (1000 * 60 * 60 * 24);
+
+    const result = elapsedTimeDays >= Constants.VERSION_CHECK_INTERVAL_DAYS;
+
+    console.info(`needToCheckVersion: lastVersionCheck: ${lastVersionCheck} now: ${now} elapsedTimeDays: ${elapsedTimeDays} result: ${result}`);
+
+    return result;
 }
