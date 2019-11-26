@@ -1,6 +1,6 @@
 {
   "name": "EBTCalc",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "Programmable RPN Calculator",
   "main": "src/main.js",
   "scripts": {
@@ -26,18 +26,18 @@
   "author": "eric@terrell.info",
   "license": "GPL-3.0-only",
   "devDependencies": {
-    "electron": "^6.0.11",
-    "electron-packager": "^14.0.6",
+    "electron": "^7.1.2",
+    "electron-packager": "^14.1.1",
     "chai": "^4.2.0",
-    "mocha": "^6.2.1",
+    "mocha": "^6.2.2",
     "sinon": "^7.5.0"
   },
   "dependencies": {
     "bignumber.js": "^9.0.0",
-    "chart.js": "^2.9.2",
+    "chart.js": "^2.9.3",
     "esprima": "^4.0.1",
     "nyc": "^14.1.1",
-    "prettier": "1.18.2",
+    "prettier": "^1.19.1",
     "pretty-data": "^0.40.0",
     "serialize-javascript": "^2.1.0"
   },

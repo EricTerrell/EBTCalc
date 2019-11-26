@@ -266,7 +266,7 @@ function wireUpButtons() {
 
 function allowClose() {
     const options = {
-        type: StringLiterals.QUESTION,
+        type: StringLiterals.DIALOG_QUESTION,
         title: 'Exit',
         message: 'Custom button code has changed. Save changes?',
         buttons: Constants.YES_NO_CANCEL,
@@ -274,8 +274,14 @@ function allowClose() {
         cancelId: 2
     };
 
-    dialog.showMessageBox(remote.getCurrentWindow(), options, (response) => {
-        switch(response) {
+    preventWindowClose = true;
+
+    dialog.
+    showMessageBox(remote.getCurrentWindow(), options)
+        .then(response => {
+        console.log(`response: ${response}`);
+
+        switch(response.response) {
             // Yes
             case 0: {
                 Files.saveUserSourceCode(sourceCode.value);
@@ -283,14 +289,14 @@ function allowClose() {
                 preventWindowClose = false;
                 this.window.close();
             }
-            break;
+                break;
 
             // No
             case 1: {
                 preventWindowClose = false;
                 this.window.close();
             }
-            break;
+                break;
         }
     });
 }
