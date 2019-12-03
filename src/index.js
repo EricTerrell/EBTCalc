@@ -40,8 +40,8 @@ const errorText = new ErrorText();
 const TopLine = require('./lib/topLine');
 const Stack = require('./lib/stack');
 
-const topLine = new TopLine(valueFormatter, errorText, enableDisableFunctionButtons.bind(this));
-const stack = new Stack(valueFormatter, enableDisableFunctionButtons.bind(this));
+const topLine = new TopLine(valueFormatter, errorText, enableDisableButtons.bind(this));
+const stack = new Stack(valueFormatter, enableDisableButtons.bind(this));
 
 topLine.stack = stack;
 stack.topLine = topLine;
@@ -52,13 +52,13 @@ let variableNames = [];
 const FunctionExecutor = require('./lib/functionExecutor');
 const functionExecutor = new FunctionExecutor(topLine, stack, errorText, valueFormatter, variables, variableNames,
     displayLogMessage.bind(this), graph.bind(this),
-    enableDisableFunctionButtons.bind(this));
+    enableDisableButtons.bind(this));
 
 const Category = require('./lib/category');
-const category = new Category(functionExecutor, topLine, enableDisableFunctionButtons.bind(this));
+const category = new Category(functionExecutor, topLine, enableDisableButtons.bind(this));
 
 const BuiltInFunctions = require('./lib/builtInFunctions');
-const builtInFunctions = new BuiltInFunctions(stack, topLine, valueFormatter, errorText, variableNames, functionExecutor, enableDisableFunctionButtons.bind(this));
+const builtInFunctions = new BuiltInFunctions(stack, topLine, valueFormatter, errorText, variableNames, functionExecutor, enableDisableButtons.bind(this));
 
 const editButton = document.querySelector('#edit');
 const settingsButton = document.querySelector('#settings');
@@ -122,7 +122,7 @@ function wireUpUI() {
 
     loadData();
 
-    enableDisableFunctionButtons(stack.stackSize());
+    enableDisableButtons(stack.stackSize());
 
     const licenseTermsData = Files.getLicenseTerms();
 
@@ -202,9 +202,12 @@ function loadData() {
     }
 }
 
-function enableDisableFunctionButtons() {
+function enableDisableButtons() {
     // If there is something in the top line, we count it as a stack item, since it will be automatically pushed.
     let stackSize = stack.stackSize() + (topLine.value.trim().length > 0 ? 1 : 0);
+
+    enableDisableOperationButtons(stackSize);
+    enableDisableBackspace();
 
     console.info(`index.js enableDisableFunctionButtons stackSize=${stackSize} variables: ${JSON.stringify(variableNames)} topLine: '${topLine.value}' topLine length: ${topLine.value.length}`);
 
@@ -226,6 +229,32 @@ function enableDisableFunctionButtons() {
             }
         }
     });
+}
+
+function enableDisableOperationButtons(stackSize) {
+    const binaryButtonInfo = [
+        'divide', 'multiply', 'add', 'subtract', 'raise'
+    ];
+
+    binaryButtonInfo.forEach(element => {
+        const button = document.querySelector('#' + element);
+
+        button.disabled = stackSize < 2;
+    });
+
+    const unaryButtonInfo = ['percent', 'square'];
+
+    unaryButtonInfo.forEach(element => {
+        const button = document.querySelector('#' + element);
+
+        button.disabled = stackSize < 1;
+    })
+}
+
+function enableDisableBackspace() {
+    const backspaceButton = document.querySelector('#backspace');
+
+    backspaceButton.disabled = topLine.value.length === 0;
 }
 
 function displayLogMessage(message) {
