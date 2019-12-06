@@ -20,7 +20,7 @@
 
 const ipc = require('electron').ipcRenderer;
 const StringLiterals = require('./lib/stringLiterals.js');
-const {remote, clipboard} = require('electron');
+const {remote} = require('electron');
 const { Menu, MenuItem } = remote;
 
 const closeButton = document.querySelector('#close');
@@ -47,7 +47,7 @@ function wireUpUI(stackItems) {
         preItem.addEventListener(StringLiterals.CONTEXTMENU, (event) => {
             const menu = new Menu();
 
-            menu.append(new MenuItem({ role: 'selectall' }));
+            menu.append(new MenuItem({ role: 'selectAll' }));
             menu.append(new MenuItem({ role: 'copy' }));
 
             if (!this.contextMenuActive) {

@@ -21,7 +21,6 @@
 const expect = require('chai').expect;
 
 const BaseNumber = require('./baseNumber');
-const baseNumber = new BaseNumber();
 
 describe("BaseNumber tests", () => {
     it('should handle binary, decimal, and hex numbers, and base conversions', () => {

@@ -31,7 +31,7 @@ let preventWindowClose = true;
 wireUpUI();
 
 function wireUpUI() {
-    this.window.onbeforeunload = (event) => {
+    this.window.onbeforeunload = () => {
         if (preventWindowClose) {
             rejectOrAcceptTerms();
 

@@ -71,10 +71,10 @@ ipc.on(StringLiterals.VARIABLE_WINDOW_CHANNEL, (event, options) => {
         textRadioButton.checked = StringLiterals.CHECKED;
     }
 
-    wireUpUI(options);
+    wireUpUI();
 });
 
-function wireUpUI(options) {
+function wireUpUI() {
     function submit() {
         if (!ok.disabled) {
             let variableName;

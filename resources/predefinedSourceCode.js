@@ -474,7 +474,7 @@ class Developer {
 
     // button Developer.jsonPrettyPrint "JSON Pretty Print" "Developer"
     static jsonPrettyPrint(jsonText) {
-        jsonText = JSON.parse(jsonText.replace(/\r|\n/g, ' '));
+        jsonText = JSON.parse(jsonText.replace(/[\r\n]/g, ' '));
         jsonText = JSON.stringify(jsonText, null, 4);
 
         return jsonText;
