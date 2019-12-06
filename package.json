@@ -39,7 +39,7 @@
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
     "pretty-data": "^0.40.0",
-    "serialize-javascript": "^2.1.0"
+    "serialize-javascript": "^2.1.1"
   },
   "mocha": {
     "spec": "./unit"
