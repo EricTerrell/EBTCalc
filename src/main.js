@@ -22,7 +22,7 @@ const {app, BrowserWindow} = require('electron');
 const StringLiterals = require('../lib/stringLiterals');
 const path = require('path');
 const WindowInfo = require('../lib/windowInfo');
-const {Menu, shell} = require('electron');
+const {Menu, shell, ipcMain} = require('electron');
 const WindowUtils = require('../lib/windowUtils');
 const OSUtils = require('../lib/osUtils');
 const pkg = require('../package');
@@ -207,17 +207,17 @@ function createWindow() {
     createMenus(mainWindow);
 }
 
-function notifySourceCodeChanged() {
-    console.info('notifySourceCodeChanged');
+ipcMain.handle(StringLiterals.NOTIFY_SOURCE_CODE_CHANGED, async(event) => {
+    console.info(StringLiterals.NOTIFY_SOURCE_CODE_CHANGED);
 
     mainWindow.webContents.send(StringLiterals.UPDATE_SOURCE_CODE);
-}
+});
 
-function notifySettingsChanged() {
-    console.info('notifySettingsChanged');
+ipcMain.handle(StringLiterals.NOTIFY_SETTINGS_CHANGED, async (event) => {
+    console.info(StringLiterals.NOTIFY_SETTINGS_CHANGED);
 
     mainWindow.webContents.send(StringLiterals.SETTINGS_CHANGED);
-}
+});
 
 function onLineHelp() {
     shell.openExternal(pkg.config.onLineHelpUrl);
@@ -333,4 +333,4 @@ function equalsCallback() {
     console.log('equalsCallback');
 }
 
-module.exports = {notifySourceCodeChanged, notifySettingsChanged, checkForUpdates};
+module.exports = {checkForUpdates};

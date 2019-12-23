@@ -19,6 +19,7 @@
 */
 
 const StringLiterals = require('./lib/stringLiterals');
+const Constants = require('./lib/constants');
 const StringUtils = require('./lib/stringUtils');
 const Files = require('./lib/files');
 
@@ -94,10 +95,15 @@ function enableDisableOKButton() {
         return '0123456789e+-'.includes(character);
     }
 
+    function isOperator(char) {
+        return Constants.OPERATOR_CHARS.includes(char);
+    }
+
     const enabled =
         decimalPointCharacter.value.length === 1
         && thousandsSeparator.value.length === 1
         && decimalPointCharacter.value !== thousandsSeparator.value
+        && !isOperator(decimalPointCharacter.value) && !isOperator(thousandsSeparator.value)
         && !isNumberCharacter(decimalPointCharacter.value[0])
         && !isNumberCharacter(thousandsSeparator.value[0])
         && StringUtils.isNumber(tabWidth.value) && Number.parseInt(tabWidth.value) > 0;
