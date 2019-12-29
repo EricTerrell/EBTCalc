@@ -21,7 +21,7 @@
 const BigNumber = require('bignumber.js');
 const expect = require('chai').expect;
 
-const serializerDeserializer = require('../lib/serializerDeserializer');
+const serializerDeserializer = require('../../lib/serializerDeserializer');
 
 const Whatever = require('./whatever');
 const whatever = new Whatever();

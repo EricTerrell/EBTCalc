@@ -20,8 +20,8 @@
 
 const expect = require('chai').expect;
 
-const StringUtils = require('../lib/stringUtils');
-const StringLiterals = require('../lib/stringLiterals');
+const StringUtils = require('../../lib/stringUtils');
+const StringLiterals = require('../../lib/stringLiterals');
 
 describe("StringUtils tests", () => {
     it('should not consider blank string, undefined, or null to be a number', () => {

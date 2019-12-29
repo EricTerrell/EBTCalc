@@ -20,21 +20,12 @@
 
 const expect = require('chai').expect;
 
-const ValueFormatter = require('../lib/valueFormatter');
+const StringLiterals = require('../../lib/stringLiterals');
 
-describe("ValueFormatter tests", () => {
-    let valueFormatter;
+const ENCODING = 'utf8';
 
-    beforeEach(() => {
-        valueFormatter = new ValueFormatter();
-    });
-
-    it('should format dates', () => {
-        const dateString = '2011-10-10T14:48:00';
-
-        const date = new Date(dateString);
-        const dateText = valueFormatter.getDisplayText(date);
-
-        expect(dateText).to.equal('Mon Oct 10 2011 14:48:00 GMT-0600 (Mountain Daylight Time)');
+describe("stringLiterals tests", () => {
+    it('should find string literal', () => {
+        expect(StringLiterals.LI).to.equal('LI');
     });
 });

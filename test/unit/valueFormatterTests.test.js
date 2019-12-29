@@ -20,18 +20,21 @@
 
 const expect = require('chai').expect;
 
-const detectBuiltIns = require('../lib/detectNewables');
+const ValueFormatter = require('../../lib/valueFormatter');
 
-describe("DetectBuiltIns tests", () => {
-    it('should handle null', () => {
-        expect(detectBuiltIns.isNewable(null)).to.be.true;
+describe("ValueFormatter tests", () => {
+    let valueFormatter;
+
+    beforeEach(() => {
+        valueFormatter = new ValueFormatter();
     });
 
-    it('should handle Number', () => {
-        expect(detectBuiltIns.isNewable('Number')).to.be.true;
-    });
+    it('should format dates', () => {
+        const dateString = '2011-10-10T14:48:00';
 
-    it('should handle non built-in', () => {
-        expect(detectBuiltIns.isNewable('Whatever')).to.be.false;
+        const date = new Date(dateString);
+        const dateText = valueFormatter.getDisplayText(date);
+
+        expect(dateText).to.equal('Mon Oct 10 2011 14:48:00 GMT-0600 (Mountain Daylight Time)');
     });
 });

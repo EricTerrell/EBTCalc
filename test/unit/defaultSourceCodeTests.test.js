@@ -21,14 +21,14 @@
 const expect = require('chai').expect;
 const path = require('path');
 const fs = require('fs');
-const StringLiterals = require('../lib/stringLiterals');
+const StringLiterals = require('../../lib/stringLiterals');
 
 describe("default Source Code tests", () => {
     let Main, ComputerMath, Trig, Statistics, Developer;
 
     before(() => {
-        const originalPath = path.join(__dirname, '../resources/predefinedSourceCode.js');
-        const newPath = path.join(__dirname, '../resources/defaultSourceCodeModule.js');
+        const originalPath = path.join(__dirname, '../../resources/predefinedSourceCode.js');
+        const newPath = path.join(__dirname, '../../resources/defaultSourceCodeModule.js');
 
         const originalSourceCode = fs.readFileSync(originalPath, StringLiterals.ENCODING);
         const newSourceCode =

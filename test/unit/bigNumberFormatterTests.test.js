@@ -20,7 +20,7 @@
 
 const expect = require('chai').expect;
 const BigNumber = require('bignumber.js');
-const BigNumberFormatter = require('../lib/bigNumberFormatter');
+const BigNumberFormatter = require('../../lib/bigNumberFormatter');
 
 describe("BigNumberFormatter tests", () => {
     let bigNumberFormatter;
