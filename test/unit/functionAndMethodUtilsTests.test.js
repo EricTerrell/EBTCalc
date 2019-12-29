@@ -18,12 +18,12 @@
     along with EBTCalc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const FunctionAndMethodUtils = require('../lib/functionAndMethodUtils');
-const parser = require('../lib/parser');
+const FunctionAndMethodUtils = require('../../lib/functionAndMethodUtils');
+const parser = require('../../lib/parser');
 const fs = require('fs');
 const path = require('path');
 
-const StringLiterals = require('../lib/stringLiterals');
+const StringLiterals = require('../../lib/stringLiterals');
 
 const expect = require('chai').expect;
 

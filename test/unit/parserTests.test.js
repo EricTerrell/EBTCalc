@@ -20,11 +20,11 @@
 
 const expect = require('chai').expect;
 
-const parser = require('../lib/parser');
+const parser = require('../../lib/parser');
 const fs = require('fs');
 const path = require('path');
 
-const StringLiterals = require('../lib/stringLiterals');
+const StringLiterals = require('../../lib/stringLiterals');
 
 describe("parser tests", () => {
     it('should find functions, methods, and parameters', () => {

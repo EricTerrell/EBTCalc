@@ -9,7 +9,7 @@
     "build-windows": "electron-packager . --icon=resources/calc.ico --out ../EBTCalc-build --overwrite --platform=win32 --asar",
     "build-mac": "electron-packager . --out ../EBTCalc-build --overwrite --platform=darwin --asar",
     "build-linux": "electron-packager . --icon=resources/calc.png --out ../EBTCalc-build --overwrite --platform=linux --asar",
-    "test": "nyc mocha './unit/*.test.js'"
+    "test": "nyc mocha"
   },
   "config": {
     "githubUrl": "https://github.com/EricTerrell/EBTCalc",
@@ -26,11 +26,12 @@
   "author": "eric@terrell.info",
   "license": "GPL-3.0-only",
   "devDependencies": {
+    "chai": "^4.2.0",
     "electron": "^7.1.2",
     "electron-packager": "^14.1.1",
-    "chai": "^4.2.0",
     "mocha": "^6.2.2",
-    "sinon": "^7.5.0"
+    "sinon": "^7.5.0",
+    "spectron": "^9.0.0"
   },
   "dependencies": {
     "bignumber.js": "^9.0.0",
@@ -42,6 +43,6 @@
     "serialize-javascript": "^2.1.1"
   },
   "mocha": {
-    "spec": "./unit"
+    "spec": "./test/unit, ./test/integration"
   }
 }

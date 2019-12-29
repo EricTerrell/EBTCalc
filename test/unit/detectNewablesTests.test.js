@@ -20,12 +20,18 @@
 
 const expect = require('chai').expect;
 
-const StringLiterals = require('../lib/stringLiterals');
+const detectBuiltIns = require('../../lib/detectNewables');
 
-const ENCODING = 'utf8';
+describe("DetectBuiltIns tests", () => {
+    it('should handle null', () => {
+        expect(detectBuiltIns.isNewable(null)).to.be.true;
+    });
 
-describe("stringLiterals tests", () => {
-    it('should find string literal', () => {
-        expect(StringLiterals.LI).to.equal('LI');
+    it('should handle Number', () => {
+        expect(detectBuiltIns.isNewable('Number')).to.be.true;
+    });
+
+    it('should handle non built-in', () => {
+        expect(detectBuiltIns.isNewable('Whatever')).to.be.false;
     });
 });
