@@ -1,15 +1,16 @@
-const Application = require('spectron').Application
-const assert = require('assert')
+const Application = require('spectron').Application;
+const assert = require('assert');
 const path = require('path');
+const StringLiterals = require('../../lib/stringLiterals');
 
-// https://github.com/electron-userland/spectron
+let client;
 
 describe('Built-in Operations', function () {
-    this.timeout(10000);
+    this.timeout(60000);
 
     before(async function () {
         this.app = new Application({
-            // Your electron path can be any binary
+            // Your electron path can be any binary. Specify a path value that points to where you installed EBTCalc.
             path: 'C:\\Users\\Eric Terrell\\Documents\\EBTCalc-win32-x64\\EBTCalc.exe',
 
             // Assuming you have the following directory structure
@@ -30,7 +31,7 @@ describe('Built-in Operations', function () {
 
         const app = await this.app.start();
 
-        const client = this.app.client;
+        client = this.app.client;
 
         await client.click('#clear_all');
 
@@ -41,8 +42,6 @@ describe('Built-in Operations', function () {
     });
 
     beforeEach(async function() {
-        const client = this.app.client;
-
         await client.click('#clear_all');
 
         await client.click('#button_8');
@@ -56,8 +55,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should add correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#clear_all');
 
         await client.click('#button_2');
@@ -72,8 +69,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should subtract correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#clear_all');
 
         await client.click('#button_5');
@@ -88,8 +83,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should multiply correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#clear_all');
 
         await client.click('#button_5');
@@ -104,8 +97,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should divide correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#clear_all');
 
         await client.click('#button_1');
@@ -120,8 +111,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should calculate square root correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#button_2');
         await client.click('#square_root');
 
@@ -131,8 +120,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should calculate change sign correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#button_3');
         await client.click('#change_sign');
 
@@ -142,8 +129,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should handle fix correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#pi');
 
         let stackText = await client.getText('#stack');
@@ -152,8 +137,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should handle float correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#pi');
 
         let stackText = await client.getText('#stack');
@@ -168,8 +151,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should handle scientific notation correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#button_6');
         await client.click('#decimal_point');
         await client.click('#button_0');
@@ -188,8 +169,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should calculate reciprocal correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#button_8');
         await client.click('#reciprocal');
 
@@ -199,8 +178,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should calculate factorial correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#button_6');
         await client.click('#factorial');
 
@@ -210,8 +187,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should handle [...] → correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#button_6');
         await client.click('#enter');
         await client.click('#button_7');
@@ -227,8 +202,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should handle → [...] correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#button_6');
         await client.click('#enter');
         await client.click('#button_7');
@@ -239,8 +212,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should handle x → [...] correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#button_6');
         await client.click('#enter');
         await client.click('#button_7');
@@ -256,8 +227,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should raise to exponent correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#button_2');
         await client.click('#enter');
 
@@ -270,8 +239,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should calculate % correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#button_2');
         await client.click('#percent');
 
@@ -280,8 +247,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should calculate square correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#button_2');
         await client.click('#square');
 
@@ -290,11 +255,135 @@ describe('Built-in Operations', function () {
     });
 
     it('should calculate pi correctly', async function() {
-        const client = this.app.client;
-
         await client.click('#pi');
 
         const stackText = await client.getText('#stack');
         assert.equal(stackText, '3.14159265');
+    });
+
+    it('should handle drop correctly', async function() {
+        await client.click('#button_2');
+        await client.click('#enter');
+
+        await client.click('#button_7');
+        await client.click('#enter');
+
+        await client.click('#drop');
+
+        const stackText = await client.getText('#stack');
+        assert.equal(stackText, '2.00000000');
+    });
+
+    it('should handle swap correctly', async function() {
+        await client.click('#button_2');
+        await client.click('#enter');
+
+        await client.click('#button_7');
+        await client.click('#enter');
+
+        let stackText = await client.getText('#stack');
+        assert.equal(stackText, '2.00000000\n7.00000000');
+
+        await client.click('#swap');
+
+        stackText = await client.getText('#stack');
+        assert.equal(stackText, '7.00000000\n2.00000000');
+    });
+
+    async function _clearEntryClearAllSetup() {
+        await client.click('#button_2');
+        await client.click('#enter');
+
+        await client.click('#button_7');
+        await client.click('#enter');
+
+        await client.click('#button_3');
+        await client.click('#decimal_point');
+        await client.click('#button_1');
+        await client.click("#button_4");
+
+        const topLineText = await client.getValue('#topLine');
+        assert.equal(topLineText, '3.14');
+    }
+
+    it('should handle clear entry correctly', async function() {
+        await _clearEntryClearAllSetup();
+
+        let stackText = await client.getText('#stack');
+        assert.equal(stackText, '2.00000000\n7.00000000');
+
+        await client.click('#clear_entry');
+
+        // Stack should still be intact.
+        stackText = await client.getText('#stack');
+        assert.equal(stackText, '2.00000000\n7.00000000');
+
+        // Top Line should be clear.
+        const topLineText = await client.getValue('#topLine');
+        assert.equal(topLineText, StringLiterals.EMPTY_STRING);
+    });
+
+    it('should handle clear all correctly', async function() {
+        await _clearEntryClearAllSetup();
+
+        let stackText = await client.getText('#stack');
+        assert.equal(stackText, '2.00000000\n7.00000000');
+
+        await client.click('#clear_all');
+
+        // Stack should be empty.
+        stackText = await client.getText('#stack');
+        assert.equal(stackText, StringLiterals.EMPTY_STRING);
+
+        // Top Line should be clear.
+        const topLineText = await client.getValue('#topLine');
+        assert.equal(topLineText, StringLiterals.EMPTY_STRING);
+    });
+
+    it('should handle backspace correctly', async function() {
+        let topLineText = await client.getValue('#topLine');
+        assert.equal(topLineText, StringLiterals.EMPTY_STRING);
+
+        await client.click('#button_3');
+        await client.click('#decimal_point');
+        await client.click('#button_1');
+        await client.click('#button_4');
+
+        topLineText = await client.getValue('#topLine');
+        assert.equal(topLineText, '3.14');
+
+        await client.click('#backspace');
+        topLineText = await client.getValue('#topLine');
+        assert.equal(topLineText, '3.1');
+    });
+
+    it('should handle invalid inputs correctly', async function() {
+        const topLineText = await client.getValue('#topLine');
+        assert.equal(topLineText, StringLiterals.EMPTY_STRING);
+
+        // Enter floating-point number with multiple decimal points.
+        await client.click('#button_3');
+        await client.click('#decimal_point');
+        await client.click('#decimal_point');
+        await client.click('#button_1');
+        await client.click('#button_4');
+        await client.click('#enter');
+
+        const errorText = await client.getText('#error');
+        assert.equal(errorText, "Error: invalid value: '3..14'.");
+    });
+
+    it('should handle enter correctly', async function() {
+        await client.click('#button_9');
+        await client.click('#enter');
+
+        let stackText = await client.getText('#stack');
+        assert.equal(stackText, '9.00000000');
+
+        // Pressing Enter again should duplicate the value.
+        await client.click('#enter');
+
+        stackText = await client.getText('#stack');
+        assert.equal(stackText, '9.00000000\n9.00000000');
     });
 });
