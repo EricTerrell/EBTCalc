@@ -55,8 +55,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should add correctly', async function() {
-        await client.click('#clear_all');
-
         await client.click('#button_2');
         await client.click('#enter');
 
@@ -69,8 +67,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should subtract correctly', async function() {
-        await client.click('#clear_all');
-
         await client.click('#button_5');
         await client.click('#enter');
 
@@ -83,8 +79,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should multiply correctly', async function() {
-        await client.click('#clear_all');
-
         await client.click('#button_5');
         await client.click('#enter');
 
@@ -97,8 +91,6 @@ describe('Built-in Operations', function () {
     });
 
     it('should divide correctly', async function() {
-        await client.click('#clear_all');
-
         await client.click('#button_1');
         await client.click('#enter');
 

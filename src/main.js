@@ -164,7 +164,9 @@ function createMenus(window) {
 }
 
 function createWindow() {
-    Menu.setApplicationMenu(null);
+    if (WindowUtils.displayCustomMenus()) {
+        Menu.setApplicationMenu(null);
+    }
 
     // Create the browser window.
     const windowId = 'main';

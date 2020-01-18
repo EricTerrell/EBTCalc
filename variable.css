@@ -1,11 +1,11 @@
 #textbox {
-    width: 20em;
+    width: calc(100vw - 3em);
     font-family: Lucida Console, Courier, monospace;
     font-size: medium;
 }
 
 #dropdown {
-    width: 20em;
+    width: calc(100vw - 3em);
     font-family: Lucida Console, Courier, monospace;
     font-size: medium;
 }
