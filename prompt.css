@@ -1,5 +1,5 @@
 #textbox {
-    width: 20em;
+    width: calc(100vw - 1.5em);
     font-family: Lucida Console, Courier, monospace;
     font-size: medium;
 }
