@@ -370,22 +370,22 @@ class Trig {
     };
 
     // button Trig.sinh "SinH" "Trig"
-    static sinh(x) { return (Math.pow(Math.E, x) - Math.pow(Math.E, -x)) / 2; };
+    static sinh(x) { return Math.sinh(x); };
 
     // button Trig.asinh "ASinH" "Trig"
-    static asinh(x) { return Math.log(x + Math.sqrt(Math.pow(x, 2) + 1)); };
+    static asinh(x) { return Math.asinh(x); };
 
     // button Trig.cosh "CosH" "Trig"
-    static cosh(x) { return (Math.pow(Math.E, x) + Math.pow(Math.E, -x)) / 2; };
+    static cosh(x) { return Math.cosh(x); };
 
     // button Trig.acosh "ACosH" "Trig"
-    static acosh(x) { return Math.log(x + Math.sqrt(Math.pow(x, 2) - 1)); };
+    static acosh(x) { return Math.acosh(x); };
 
     // button Trig.tanh "TanH" "Trig"
-    static tanh(x) { return Trig.sinh(x) / Trig.cosh(x); };
+    static tanh(x) { return Math.tanh(x); };
 
-    // button Trig.tanh "ATanH" "Trig"
-    static atanh(x) { return Math.log((1 + x) / (1 - x)) / 2; };
+    // button Trig.atanh "ATanH" "Trig"
+    static atanh(x) { return Math.atanh(x); };
 }
 
 class Statistics {
@@ -464,17 +464,17 @@ class Dates {
 class Developer {
     // button Developer.base64Encode "base64Encode" "Developer"
     static base64Encode(unencodedString) {
-        return new Buffer(unencodedString).toString('base64');
+        return Buffer.from(unencodedString).toString('base64');
     }
 
     // button Developer.base64Decode "base64Decode" "Developer"
     static base64Decode(encodedString) {
-        return new Buffer(encodedString, 'base64').toString('utf8');
+        return Buffer.from(encodedString, 'base64').toString('utf8');
     }
 
     // button Developer.jsonPrettyPrint "JSON Pretty Print" "Developer"
     static jsonPrettyPrint(jsonText) {
-        jsonText = JSON.parse(jsonText.replace(/\r|\n/g, ' '));
+        jsonText = JSON.parse(jsonText.replace(/[\r\n]/g, ' '));
         jsonText = JSON.stringify(jsonText, null, 4);
 
         return jsonText;
@@ -566,4 +566,4 @@ class ___Graph {
     }
 }
 
-module.exports = [Main, ComputerMath, Trig, Statistics];
+module.exports = [Main, ComputerMath, Trig, Statistics, Developer, Dates, BaseNumber, ComputerMath];
