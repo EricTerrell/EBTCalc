@@ -270,7 +270,7 @@ function allowClose() {
         title: 'Exit',
         message: 'Custom button code has changed. Save changes?',
         buttons: Constants.YES_NO_CANCEL,
-        defaultId: 1,
+        defaultId: 0,
         cancelId: 2
     };
 
