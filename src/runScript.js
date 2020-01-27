@@ -1,6 +1,6 @@
 /*
   EBTCalc
-  (C) Copyright 2019, Eric Bergman-Terrell
+  (C) Copyright 2020, Eric Bergman-Terrell
 
   This file is part of EBTCalc.
 
@@ -39,7 +39,8 @@ const sandbox = {
     Map: Map,
     Set: Set,
     Buffer: Buffer,
-    BigNumber
+    BigNumber,
+    pushValue
 };
 
 const options = {
@@ -74,3 +75,7 @@ try {
 }
 
 process.send({sandbox: sandbox});
+
+function pushValue(value) {
+    process.send({push: value});
+}

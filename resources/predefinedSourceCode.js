@@ -1,6 +1,6 @@
 /*
   EBTCalc
-  (C) Copyright 2019, Eric Bergman-Terrell
+  (C) Copyright 2020, Eric Bergman-Terrell
 
   This file is part of EBTCalc.
 
@@ -563,5 +563,37 @@ class ___Graph {
         }
 
         return new ___Graph(type, data, options);
+    }
+}
+
+class ___Stack {
+    static push(value) {
+        const serializedValue = ___sd.serialize(value);
+
+        pushValue(serializedValue);
+    }
+}
+
+class StackManipulation {
+    // button StackManipulation.rollUp "Roll ↑" "Stack"
+    static rollUp(...stack) {
+        if (stack.length) {
+            for (let i = 1; i < stack.length; i++) {
+                ___Stack.push(stack[i]);
+            }
+
+            ___Stack.push(stack[0]);
+        }
+    }
+
+    // button StackManipulation.rollDown "Roll ↓" "Stack"
+    static rollDown(...stack) {
+        if (stack.length) {
+            ___Stack.push(stack[stack.length - 1]);
+
+            for (let i = 0; i < stack.length - 1; i++) {
+                ___Stack.push(stack[i]);
+            }
+        }
     }
 }
