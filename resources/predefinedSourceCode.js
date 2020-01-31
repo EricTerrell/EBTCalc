@@ -131,7 +131,7 @@ class BaseNumber {
         baseNames[10] = "DEC";
         baseNames[16] = "HEX";
 
-        return baseNames[this.base] + " " + this.number.toUpperCase();
+        return `${baseNames[this.base]} ${this.number.toUpperCase()}`;
     };
 
     length() {
@@ -435,9 +435,17 @@ class Statistics {
 }
 
 class Memory {
-    static retrieveVariable(variableName) { return ___variables.get(variableName); }
+    static retrieveVariable(variableName) {
+        return ___sd.deserialize(___variables.get(variableName), ___evalFunction);
+    }
 
-    static storeVariable(variableValue, variableName) { ___variables.set(variableName, variableValue); }
+    static storeVariable(variableValue, variableName) {
+        /*
+        We store the serialized value of variables. Otherwise, when the entire Map is serialized before saving to a
+        file, the className is lost, and the variables cannot be properly deserialized.
+         */
+        ___variables.set(variableName, ___sd.serialize(variableValue));
+    }
 
     static deleteVariable(variableName) { ___variables.delete(variableName); }
 
