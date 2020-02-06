@@ -229,6 +229,12 @@ function enableDisableButtons() {
             }
         }
     });
+
+    document.querySelector('#mode_indicator').innerText = `Mode: ${getModeString()}`;
+}
+
+function getModeString() {
+    return valueFormatter.isInFloatMode() ? 'FLOAT' : 'FIX';
 }
 
 function enableDisableOperationButtons(stackSize) {
