@@ -197,3 +197,7 @@ li>pre {
 
     background-color: lightslategray;
 }
+
+#mode_indicator {
+    margin-left: 1em;
+}
