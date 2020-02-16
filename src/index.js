@@ -238,9 +238,7 @@ function getModeString() {
 }
 
 function enableDisableOperationButtons(stackSize) {
-    const binaryButtonInfo = [
-        'divide', 'multiply', 'add', 'subtract', 'raise'
-    ];
+    const binaryButtonInfo = ['divide', 'multiply', 'add', 'subtract', 'raise'];
 
     binaryButtonInfo.forEach(element => {
         const button = document.querySelector('#' + element);

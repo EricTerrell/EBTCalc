@@ -453,17 +453,22 @@ class Memory {
 }
 
 class Dates {
-    // button Dates.Now "Now" "Dates"
+    // button Dates.create "→Date" "Dates & Times"
+    static create(year, month, day, hours = 0, minutes = 0, seconds = 0, milliSeconds = 0) {
+        return new Date(year, month - 1, day, hours, minutes, seconds, milliSeconds);
+    }
+
+    // button Dates.Now "Now" "Dates & Times"
     static Now() {
         return new Date();
     }
 
-    // button Dates.str2Date "String →Date" "Dates"
+    // button Dates.str2Date "String →Date" "Dates & Times"
     static str2Date(dateString) {
         return new Date(dateString);
     }
 
-    // button Dates.diffInDays "Diff in Days" "Dates"
+    // button Dates.diffInDays "Diff in Days" "Dates & Times"
     static diffInDays(d1, d2) {
         return (d1 - d2) / (1000 * 60 * 60 * 24);
     }
