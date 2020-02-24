@@ -263,7 +263,7 @@ function enableDisableBackspace() {
 
 function displayLogMessage(message) {
     if (logWindow) {
-        logWindow.webContents.send('log-message', message);
+        logWindow.webContents.send('log-message', message.toString());
     }
 }
 
