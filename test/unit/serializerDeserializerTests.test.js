@@ -205,4 +205,22 @@ describe("serializerDeserializer tests", () => {
 
         expect(deserializedResult).to.eql(value);
     });
+
+    it('should handle Infinity', () => {
+        const value = Infinity;
+
+        const result = serializerDeserializer.serialize(value);
+        const deserializedResult = serializerDeserializer.deserialize(result);
+
+        expect(deserializedResult).to.eql(value);
+    });
+
+    it('should handle -Infinity', () => {
+        const value = -Infinity;
+
+        const result = serializerDeserializer.serialize(value);
+        const deserializedResult = serializerDeserializer.deserialize(result);
+
+        expect(deserializedResult).to.eql(value);
+    });
 });
