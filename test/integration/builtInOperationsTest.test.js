@@ -31,7 +31,7 @@ describe('Built-in Operations', function () {
     before(async function () {
         this.app = new Application({
             // Your electron path can be any binary. Specify a path value that points to where you installed EBTCalc.
-            path: 'C:\\Users\\Eric Terrell\\Documents\\EBTCalc-win32-x64\\EBTCalc.exe',
+            path: 'C:\\Users\\Eric Terrell\\Documents\\software development\\EBTCalc-build\\EBTCalc-win32-x64\\EBTCalc.exe',
 
             // Assuming you have the following directory structure
 

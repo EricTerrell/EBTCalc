@@ -33,6 +33,8 @@ A version of [`EBTCalc for Android`](https://www.ericbt.com/ebtcalc) is also ava
 
 To run EBTCalc:
 
+On OSX: Make sure that Xcode is installed.
+
 ```sh
 git clone https://github.com/EricTerrell/EBTCalc.git
 cd EBTCalc
