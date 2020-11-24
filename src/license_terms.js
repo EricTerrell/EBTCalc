@@ -19,11 +19,7 @@
 */
 
 const StringLiterals = require('./lib/stringLiterals');
-const {name} = require('./package');
-const Constants = require('./lib/constants');
-const {remote} = require('electron');
-const {dialog, app} = require('electron').remote;
-const files = require('./lib/files');
+const {ipcRenderer} = require('electron');
 
 const okButton = document.querySelector('#ok');
 let preventWindowClose = true;
@@ -48,30 +44,11 @@ function wireUpUI() {
 }
 
 function rejectOrAcceptTerms() {
-    function rejectTerms() {
-        const options = {
-            type: StringLiterals.DIALOG_INFO,
-            title: `Rejected ${name} License Terms`,
-            message: `You rejected the ${name} license terms. Please uninstall ${name} immediately.`,
-            buttons: Constants.OK
-        };
-
-        dialog.showMessageBoxSync(remote.getCurrentWindow(), options);
-
-        files.saveLicenseTerms({userAccepted: false});
-
-        app.exit(0);
-    }
-
-    function acceptTerms() {
-        files.saveLicenseTerms({userAccepted: true});
-    }
-
     const checkedRadioButton = document.querySelector('input[name=radio_button_group]:checked').value;
 
     if (checkedRadioButton === 'reject') {
-        rejectTerms();
+        ipcRenderer.invoke(StringLiterals.REJECT_LICENSE_TERMS);
     } else {
-        acceptTerms();
+        ipcRenderer.invoke(StringLiterals.ACCEPT_LICENSE_TERMS);
     }
 }

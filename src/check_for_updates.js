@@ -18,8 +18,7 @@
     along with EBTCalc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const {remote} = require('electron');
-const shell = remote.shell;
+const {shell} = require('electron');
 const {config} = require('./package.json');
 const AppInfo = require('./lib/appInfo');
 const {checkVersion} = require('./lib/checkVersion');

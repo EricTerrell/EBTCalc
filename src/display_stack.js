@@ -53,7 +53,7 @@ function wireUpUI(stackItems) {
             if (!this.contextMenuActive) {
                 event.preventDefault();
 
-                menu.popup({window: remote.getCurrentWindow()});
+                menu.popup();
             }
         }, false);
     });
