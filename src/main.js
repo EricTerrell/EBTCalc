@@ -18,8 +18,11 @@
     along with EBTCalc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const {app, BrowserWindow} = require('electron');
+const {dialog, app, BrowserWindow} = require('electron');
 const StringLiterals = require('../lib/stringLiterals');
+const Constants = require('../lib/constants');
+const files = require('../lib/files');
+const {name} = require('../package');
 const path = require('path');
 const WindowInfo = require('../lib/windowInfo');
 const {Menu, shell, ipcMain} = require('electron');
@@ -78,6 +81,18 @@ function wireUpUI() {
 
         app.commandLine.appendSwitch('remote-debugging-port', '9222');
     }
+
+    ipcMain.handle(StringLiterals.CHECK_FOR_UPDATES, async () => {
+        checkForUpdates();
+    });
+
+    ipcMain.handle(StringLiterals.REJECT_LICENSE_TERMS, async () => {
+        rejectLicenseTerms();
+    });
+
+    ipcMain.handle(StringLiterals.ACCEPT_LICENSE_TERMS, async () => {
+        acceptLicenseTerms();
+    })
 }
 
 function createMenus(window) {
@@ -179,6 +194,7 @@ function createWindow() {
         x: windowInfo.x,
         y: windowInfo.y,
         webPreferences: {
+            enableRemoteModule: true,
             nodeIntegration: true,
             preload: path.join(__dirname, 'preload.js')
         }
@@ -257,6 +273,7 @@ function checkForUpdates() {
             x: windowInfo.x,
             y: windowInfo.y,
             webPreferences: {
+                enableRemoteModule: true,
                 nodeIntegration: true,
                 preload: path.join(__dirname, 'preload.js')
             }
@@ -297,6 +314,7 @@ function about() {
             x: windowInfo.x,
             y: windowInfo.y,
             webPreferences: {
+                enableRemoteModule: true,
                 nodeIntegration: true,
                 preload: path.join(__dirname, 'preload.js')
             }
@@ -333,6 +351,25 @@ function notEqualsCallback() {
 
 function equalsCallback() {
     console.log('equalsCallback');
+}
+
+function rejectLicenseTerms() {
+    const options = {
+        type: StringLiterals.DIALOG_INFO,
+        title: `Rejected ${name} License Terms`,
+        message: `You rejected the ${name} license terms. Please uninstall ${name} immediately.`,
+        buttons: Constants.OK
+    };
+
+    dialog.showMessageBoxSync(options);
+
+    files.saveLicenseTerms({userAccepted: false});
+
+    app.exit(0);
+}
+
+function acceptLicenseTerms() {
+    files.saveLicenseTerms({userAccepted: true});
 }
 
 module.exports = {checkForUpdates};

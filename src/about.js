@@ -18,9 +18,7 @@
     along with EBTCalc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const {remote} = require('electron');
-const mainProcess = remote.require('./main');
-const shell = remote.shell;
+const {shell, ipcRenderer} = require('electron');
 const {config} = require('./package.json');
 
 const StringLiterals = require('./lib/stringLiterals');
@@ -76,6 +74,6 @@ function wireUpUI() {
     });
 
     document.querySelector('#check_for_updates').addEventListener(StringLiterals.CLICK, () => {
-        mainProcess.checkForUpdates();
+        ipcRenderer.invoke(StringLiterals.CHECK_FOR_UPDATES);
     });
 }
