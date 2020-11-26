@@ -59,7 +59,9 @@ function wireUpUI(options) {
                 type: StringLiterals.MESSAGE_BOX_ERROR_TYPE,
                 title: 'Error',
                 detail: options.errorMessage,
-                message: options.errorTitle
+                message: options.errorTitle,
+                buttons: [ 'OK'],
+                defaultId: 0
             };
 
             dialog.showMessageBox(remote.getCurrentWindow(), dialogOptions).then();
