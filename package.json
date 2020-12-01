@@ -31,7 +31,7 @@
     "electron-packager": "^15.1.0",
     "mocha": "^8.2.1",
     "sinon": "^9.2.1",
-    "spectron": "^12.0.0"
+    "spectron": "^13.0.0"
   },
   "dependencies": {
     "bignumber.js": "^9.0.1",

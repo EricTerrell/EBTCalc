@@ -47,11 +47,11 @@ function wireUpUI() {
     });
 
     document.querySelector('#donate').addEventListener(StringLiterals.CLICK, () => {
-        shell.openExternal(config.donateUrl);
+        shell.openExternal(config.donateUrl).then();
     });
 
     downloadButton.addEventListener(StringLiterals.CLICK, () => {
-        shell.openExternal(config.downloadUrl);
+        shell.openExternal(config.downloadUrl).then();
     });
 
     checkVersion(errorCallback, notEqualsCallback, equalsCallback);
