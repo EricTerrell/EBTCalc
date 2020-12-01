@@ -49,7 +49,7 @@ function wireUpUI() {
         link.addEventListener(StringLiterals.CLICK, (event) => {
             event.preventDefault();
 
-            shell.openExternal(link.href);
+            shell.openExternal(link.href).then();
         });
     });
 
@@ -66,14 +66,14 @@ function wireUpUI() {
     });
 
     document.querySelector('#donate').addEventListener(StringLiterals.CLICK, () => {
-        shell.openExternal(config.donateUrl);
+        shell.openExternal(config.donateUrl).then();
     });
 
     document.querySelector('#feedback').addEventListener(StringLiterals.CLICK, () => {
-        shell.openExternal(config.submitFeedback);
+        shell.openExternal(config.submitFeedback).then();
     });
 
     document.querySelector('#check_for_updates').addEventListener(StringLiterals.CLICK, () => {
-        ipcRenderer.invoke(StringLiterals.CHECK_FOR_UPDATES);
+        ipcRenderer.invoke(StringLiterals.CHECK_FOR_UPDATES).then();
     });
 }

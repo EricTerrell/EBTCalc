@@ -201,7 +201,7 @@ function createWindow() {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadFile('index.html');
+    mainWindow.loadFile('index.html').then();
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
@@ -238,23 +238,23 @@ ipcMain.handle(StringLiterals.NOTIFY_SETTINGS_CHANGED, async (event) => {
 });
 
 function onLineHelp() {
-    shell.openExternal(pkg.config.onLineHelpUrl);
+    shell.openExternal(pkg.config.onLineHelpUrl).then();
 }
 
 function visitEricBT() {
-    shell.openExternal(pkg.config.websiteUrl);
+    shell.openExternal(pkg.config.websiteUrl).then();
 }
 
 function donate() {
-    shell.openExternal(pkg.config.donateUrl);
+    shell.openExternal(pkg.config.donateUrl).then();
 }
 
 function feedback() {
-    shell.openExternal(pkg.config.submitFeedback);
+    shell.openExternal(pkg.config.submitFeedback).then();
 }
 
 function visitEBTCalc() {
-    shell.openExternal(pkg.config.ebtCalcUrl);
+    shell.openExternal(pkg.config.ebtCalcUrl).then();
 }
 
 function checkForUpdates() {
@@ -282,7 +282,7 @@ function checkForUpdates() {
         WindowUtils.disableMenus(checkForUpdatesWindow);
 
         // and load the index.html of the app.
-        checkForUpdatesWindow.loadFile('check_for_updates.html');
+        checkForUpdatesWindow.loadFile('check_for_updates.html').then();
 
         checkForUpdatesWindow.on(StringLiterals.RESIZE, (event) => {
             WindowInfo.saveWindowInfo(windowId, event.sender);
@@ -323,7 +323,7 @@ function about() {
         WindowUtils.disableMenus(aboutWindow);
 
         // and load the index.html of the app.
-        aboutWindow.loadFile('about.html');
+        aboutWindow.loadFile('about.html').then();
 
         aboutWindow.on(StringLiterals.RESIZE, (event) => {
             WindowInfo.saveWindowInfo(windowId, event.sender);

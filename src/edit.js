@@ -235,7 +235,7 @@ function wireUpButtons() {
                 buttons: []
             };
 
-            dialog.showMessageBox(remote.getCurrentWindow(), options);
+            dialog.showMessageBox(remote.getCurrentWindow(), options).then();
         }
     });
 

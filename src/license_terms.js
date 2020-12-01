@@ -47,8 +47,8 @@ function rejectOrAcceptTerms() {
     const checkedRadioButton = document.querySelector('input[name=radio_button_group]:checked').value;
 
     if (checkedRadioButton === 'reject') {
-        ipcRenderer.invoke(StringLiterals.REJECT_LICENSE_TERMS);
+        ipcRenderer.invoke(StringLiterals.REJECT_LICENSE_TERMS).then();
     } else {
-        ipcRenderer.invoke(StringLiterals.ACCEPT_LICENSE_TERMS);
+        ipcRenderer.invoke(StringLiterals.ACCEPT_LICENSE_TERMS).then();
     }
 }
