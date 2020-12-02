@@ -43,6 +43,6 @@
     "serialize-javascript": "^5.0.1"
   },
   "mocha": {
-    "spec": "./test/unit"
+    "spec": ["./test/unit", "./test/integration"]
   }
 }

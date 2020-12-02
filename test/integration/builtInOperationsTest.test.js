@@ -22,11 +22,14 @@ const Application = require('spectron').Application;
 const assert = require('assert');
 const path = require('path');
 const StringLiterals = require('../../lib/stringLiterals');
+const SpectronUtils = require('./spectronUtils');
 
 let client;
 
 describe('Built-in Operations', function () {
     this.timeout(60000);
+
+    let spectronUtils = null;
 
     before(async function () {
         try {
@@ -54,10 +57,7 @@ describe('Built-in Operations', function () {
 
             client = this.app.client;
 
-            await click('#clear_all');
-
-            await click('#button_8');
-            await click('#fix');
+            spectronUtils = new SpectronUtils(client);
 
             return app;
         } catch(error) {
@@ -65,363 +65,342 @@ describe('Built-in Operations', function () {
         }
     });
 
-    async function getElement(selector) {
-        return await client.$(selector);
-    }
-
-    async function click(selector) {
-        const element = await getElement(selector);
-
-        await element.click();
-    }
-
-    async function getText(selector) {
-        const element = await getElement(selector);
-
-        return await element.getText();
-    }
-
-    async function getValue(selector) {
-        const element = await getElement(selector);
-
-        return await element.getValue();
-    }
-
     beforeEach(async function() {
-        await click('#clear_all');
+        await spectronUtils.click('#clear_all');
 
-        await click('#button_8');
-        await click('#fix');
+        await spectronUtils.click('#button_8');
+        await spectronUtils.click('#fix');
     });
 
     after(function () {
         if (this.app && this.app.isRunning()) {
-            return this.app.stop();
+            this.app.stop();
+            this.app.mainProcess.exit(0);
         }
     });
 
     it('should add correctly', async function() {
-        await click('#button_2');
-        await click('#enter');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#enter');
 
-        await click('#button_2');
-        await click('#add');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#add');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
 
         assert.equal(stackText, '4.00000000');
     });
 
     it('should subtract correctly', async function() {
-        await click('#button_5');
-        await click('#enter');
+        await spectronUtils.click('#button_5');
+        await spectronUtils.click('#enter');
 
-        await click('#button_3');
-        await click('#subtract');
+        await spectronUtils.click('#button_3');
+        await spectronUtils.click('#subtract');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
 
         assert.equal(stackText, '2.00000000');
     });
 
     it('should multiply correctly', async function() {
-        await click('#button_5');
-        await click('#enter');
+        await spectronUtils.click('#button_5');
+        await spectronUtils.click('#enter');
 
-        await click('#button_3');
-        await click('#multiply');
+        await spectronUtils.click('#button_3');
+        await spectronUtils.click('#multiply');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
 
         assert.equal(stackText, '15.00000000');
     });
 
     it('should divide correctly', async function() {
-        await click('#button_1');
-        await click('#enter');
+        await spectronUtils.click('#button_1');
+        await spectronUtils.click('#enter');
 
-        await click('#button_3');
-        await click('#divide');
+        await spectronUtils.click('#button_3');
+        await spectronUtils.click('#divide');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
 
         assert.equal(stackText, '0.33333333');
     });
 
     it('should calculate square root correctly', async function() {
-        await click('#button_2');
-        await click('#square_root');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#square_root');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
 
         assert.equal(stackText, '1.41421356');
     });
 
     it('should calculate change sign correctly', async function() {
-        await click('#button_3');
-        await click('#change_sign');
+        await spectronUtils.click('#button_3');
+        await spectronUtils.click('#change_sign');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
 
         assert.equal(stackText, '-3.00000000');
     });
 
     it('should handle fix correctly', async function() {
-        await click('#pi');
+        await spectronUtils.click('#pi');
 
-        let stackText = await getText('#stack');
+        let stackText = await spectronUtils.getText('#stack');
 
         assert.equal(stackText, '3.14159265');
     });
 
     it('should handle float correctly', async function() {
-        await click('#pi');
+        await spectronUtils.click('#pi');
 
-        let stackText = await getText('#stack');
+        let stackText = await spectronUtils.getText('#stack');
 
         assert.equal('3.14159265', stackText);
 
-        await click('#float');
+        await spectronUtils.click('#float');
 
-        stackText = await getText('#stack');
+        stackText = await spectronUtils.getText('#stack');
 
         assert.equal(stackText, '3.141592653589793');
     });
 
     it('should handle scientific notation correctly', async function() {
-        await click('#button_6');
-        await click('#decimal_point');
-        await click('#button_0');
-        await click('#button_2');
-        await click('#button_2');
-        await click('#enter');
+        await spectronUtils.click('#button_6');
+        await spectronUtils.click('#decimal_point');
+        await spectronUtils.click('#button_0');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#enter');
 
-        await click('#button_2');
-        await click('#button_3');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#button_3');
 
-        await click('#scientific_notation');
+        await spectronUtils.click('#scientific_notation');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
 
         assert.equal(stackText, '6.02200000e+23');
     });
 
     it('should calculate reciprocal correctly', async function() {
-        await click('#button_8');
-        await click('#reciprocal');
+        await spectronUtils.click('#button_8');
+        await spectronUtils.click('#reciprocal');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
 
         assert.equal(stackText, '0.12500000');
     });
 
     it('should calculate factorial correctly', async function() {
-        await click('#button_6');
-        await click('#factorial');
+        await spectronUtils.click('#button_6');
+        await spectronUtils.click('#factorial');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
 
         assert.equal(stackText, '720.00000000');
     });
 
     it('should handle [...] → correctly', async function() {
-        await click('#button_6');
-        await click('#enter');
-        await click('#button_7');
-        await click('#stack_to_array');
+        await spectronUtils.click('#button_6');
+        await spectronUtils.click('#enter');
+        await spectronUtils.click('#button_7');
+        await spectronUtils.click('#stack_to_array');
 
-        let stackText = await getText('#stack');
+        let stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '[6.00000000, 7.00000000]');
 
-        await click('#array_to_stack');
+        await spectronUtils.click('#array_to_stack');
 
-        stackText = await getText('#stack');
+        stackText = await spectronUtils.getText('#stack');
         assert.equal('6.00000000\n7.00000000', stackText);
     });
 
     it('should handle → [...] correctly', async function() {
-        await click('#button_6');
-        await click('#enter');
-        await click('#button_7');
-        await click('#stack_to_array');
+        await spectronUtils.click('#button_6');
+        await spectronUtils.click('#enter');
+        await spectronUtils.click('#button_7');
+        await spectronUtils.click('#stack_to_array');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '[6.00000000, 7.00000000]');
     });
 
     it('should handle x → [...] correctly', async function() {
-        await click('#button_6');
-        await click('#enter');
-        await click('#button_7');
-        await click('#enter');
-        await click('#button_8');
-        await click('#enter');
+        await spectronUtils.click('#button_6');
+        await spectronUtils.click('#enter');
+        await spectronUtils.click('#button_7');
+        await spectronUtils.click('#enter');
+        await spectronUtils.click('#button_8');
+        await spectronUtils.click('#enter');
 
-        await click('#button_2');
-        await click('#top_x_values_to_array');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#top_x_values_to_array');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '6.00000000\n[7.00000000, 8.00000000]');
     });
 
     it('should raise to exponent correctly', async function() {
-        await click('#button_2');
-        await click('#enter');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#enter');
 
-        await click('#button_1');
-        await click('#button_0');
-        await click('#raise');
+        await spectronUtils.click('#button_1');
+        await spectronUtils.click('#button_0');
+        await spectronUtils.click('#raise');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '1,024.00000000');
     });
 
     it('should calculate % correctly', async function() {
-        await click('#button_2');
-        await click('#percent');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#percent');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '0.02000000');
     });
 
     it('should calculate square correctly', async function() {
-        await click('#button_2');
-        await click('#square');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#square');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '4.00000000');
     });
 
     it('should calculate pi correctly', async function() {
-        await click('#pi');
+        await spectronUtils.click('#pi');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '3.14159265');
     });
 
     it('should handle drop correctly', async function() {
-        await click('#button_2');
-        await click('#enter');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#enter');
 
-        await click('#button_7');
-        await click('#enter');
+        await spectronUtils.click('#button_7');
+        await spectronUtils.click('#enter');
 
-        await click('#drop');
+        await spectronUtils.click('#drop');
 
-        const stackText = await getText('#stack');
+        const stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '2.00000000');
     });
 
     it('should handle swap correctly', async function() {
-        await click('#button_2');
-        await click('#enter');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#enter');
 
-        await click('#button_7');
-        await click('#enter');
+        await spectronUtils.click('#button_7');
+        await spectronUtils.click('#enter');
 
-        let stackText = await getText('#stack');
+        let stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '2.00000000\n7.00000000');
 
-        await click('#swap');
+        await spectronUtils.click('#swap');
 
-        stackText = await getText('#stack');
+        stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '7.00000000\n2.00000000');
     });
 
     async function _clearEntryClearAllSetup() {
-        await click('#button_2');
-        await click('#enter');
+        await spectronUtils.click('#button_2');
+        await spectronUtils.click('#enter');
 
-        await click('#button_7');
-        await click('#enter');
+        await spectronUtils.click('#button_7');
+        await spectronUtils.click('#enter');
 
-        await click('#button_3');
-        await click('#decimal_point');
-        await click('#button_1');
-        await click("#button_4");
+        await spectronUtils.click('#button_3');
+        await spectronUtils.click('#decimal_point');
+        await spectronUtils.click('#button_1');
+        await spectronUtils.click("#button_4");
 
-        const topLineText = await getValue('#topLine');
+        const topLineText = await spectronUtils.getValue('#topLine');
         assert.equal(topLineText, '3.14');
     }
 
     it('should handle clear entry correctly', async function() {
         await _clearEntryClearAllSetup();
 
-        let stackText = await getText('#stack');
+        let stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '2.00000000\n7.00000000');
 
-        await click('#clear_entry');
+        await spectronUtils.click('#clear_entry');
 
         // Stack should still be intact.
-        stackText = await getText('#stack');
+        stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '2.00000000\n7.00000000');
 
         // Top Line should be clear.
-        const topLineText = await getValue('#topLine');
+        const topLineText = await spectronUtils.getValue('#topLine');
         assert.equal(topLineText, StringLiterals.EMPTY_STRING);
     });
 
     it('should handle clear all correctly', async function() {
         await _clearEntryClearAllSetup();
 
-        let stackText = await getText('#stack');
+        let stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '2.00000000\n7.00000000');
 
-        await click('#clear_all');
+        await spectronUtils.click('#clear_all');
 
         // Stack should be empty.
-        stackText = await getText('#stack');
+        stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, StringLiterals.EMPTY_STRING);
 
         // Top Line should be clear.
-        const topLineText = await getValue('#topLine');
+        const topLineText = await spectronUtils.getValue('#topLine');
         assert.equal(topLineText, StringLiterals.EMPTY_STRING);
     });
 
     it('should handle backspace correctly', async function() {
-        let topLineText = await getValue('#topLine');
+        let topLineText = await spectronUtils.getValue('#topLine');
         assert.equal(topLineText, StringLiterals.EMPTY_STRING);
 
-        await click('#button_3');
-        await click('#decimal_point');
-        await click('#button_1');
-        await click('#button_4');
+        await spectronUtils.click('#button_3');
+        await spectronUtils.click('#decimal_point');
+        await spectronUtils.click('#button_1');
+        await spectronUtils.click('#button_4');
 
-        topLineText = await getValue('#topLine');
+        topLineText = await spectronUtils.getValue('#topLine');
         assert.equal(topLineText, '3.14');
 
-        await click('#backspace');
-        topLineText = await getValue('#topLine');
+        await spectronUtils.click('#backspace');
+        topLineText = await spectronUtils.getValue('#topLine');
         assert.equal(topLineText, '3.1');
     });
 
     it('should handle invalid inputs correctly', async function() {
-        const topLineText = await getValue('#topLine');
+        const topLineText = await spectronUtils.getValue('#topLine');
         assert.equal(topLineText, StringLiterals.EMPTY_STRING);
 
         // Enter floating-point number with multiple decimal points.
-        await click('#button_3');
-        await click('#decimal_point');
-        await click('#decimal_point');
-        await click('#button_1');
-        await click('#button_4');
-        await click('#enter');
+        await spectronUtils.click('#button_3');
+        await spectronUtils.click('#decimal_point');
+        await spectronUtils.click('#decimal_point');
+        await spectronUtils.click('#button_1');
+        await spectronUtils.click('#button_4');
+        await spectronUtils.click('#enter');
 
-        const errorText = await getText('#error');
+        const errorText = await spectronUtils.getText('#error');
         assert.equal(errorText, "Error: invalid value: '3..14'.");
     });
 
     it('should handle enter correctly', async function() {
-        await click('#button_9');
-        await click('#enter');
+        await spectronUtils.click('#button_9');
+        await spectronUtils.click('#enter');
 
-        let stackText = await getText('#stack');
+        let stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '9.00000000');
 
         // Pressing Enter again should duplicate the value.
-        await click('#enter');
+        await spectronUtils.click('#enter');
 
-        stackText = await getText('#stack');
+        stackText = await spectronUtils.getText('#stack');
         assert.equal(stackText, '9.00000000\n9.00000000');
     });
 });
