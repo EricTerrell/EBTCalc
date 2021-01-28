@@ -27,7 +27,7 @@
   "license": "GPL-3.0-only",
   "devDependencies": {
     "chai": "^4.2.0",
-    "electron": "^11.0.2",
+    "electron": "^11.1.0",
     "electron-packager": "^15.1.0",
     "mocha": "^8.2.1",
     "sinon": "^9.2.1",
