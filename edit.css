@@ -8,14 +8,14 @@
 .source-code {
     white-space: nowrap;  overflow: auto;
 
-    width: 100%;
-    height: calc(100vh - (2em + 4em));
+    width: calc(100% - (2 * 0.25em));
+    height: calc(100vh - 6.5em);
 
     font-family: Lucida Console, Courier, monospace;
     font-size: medium;
 
-    margin: 0;
-    padding: 0;
+    /* Without padding, one cannot see the cursor flash in the leftmost column */
+    padding: 0.25em;
 
     /*
     TODO: Night mode doesn't work well on OSX - mouse cursor is almost invisible
