@@ -40,6 +40,10 @@ npm install
 npm start
 ```
 
+# Debugging
+
+To enable the Chrome debugging tools, set the DEBUG_MENUS environment variable to true (see displayCustomMenus in WindowUtils)
+
 # License
 
 [`GPL3`](https://www.gnu.org/licenses/gpl-3.0.en.html)

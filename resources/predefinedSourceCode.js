@@ -610,3 +610,27 @@ class StackManipulation {
         }
     }
 }
+
+class Angles {
+    // button Angles.dms "→dms" "Angles"
+    static dms(decimalDegrees) {
+        let sign = decimalDegrees >= 0.0 ? '' : '-';
+
+        decimalDegrees = Math.abs(decimalDegrees);
+
+        let degrees = Math.trunc(decimalDegrees);
+
+        let fractionalDegrees = decimalDegrees - degrees;
+
+        let minutes = Math.trunc(fractionalDegrees * 60.0);
+
+        fractionalDegrees = fractionalDegrees - minutes / 60.0;
+
+        let seconds = fractionalDegrees * 60.0 * 60.0;
+
+        let wholeSeconds = Math.trunc(seconds);
+        let fractionalSeconds = Math.trunc((seconds - wholeSeconds) * 1000.0);
+
+        return `${sign}${degrees}°${String(minutes).padStart(2, '0')}'${wholeSeconds}.${String(fractionalSeconds).padStart(3, '0')}"`;
+    }
+}

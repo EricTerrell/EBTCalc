@@ -1,6 +1,6 @@
 {
   "name": "EBTCalc",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Programmable RPN Calculator",
   "main": "src/main.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "npm run build-windows && npm run build-linux",
     "build-windows": "electron-packager . --icon=resources/calc.ico --out ../EBTCalc-build --overwrite --platform=win32 --asar",
     "build-mac": "electron-packager . --out ../EBTCalc-build --overwrite --platform=darwin --asar",
-    "build-linux": "electron-packager . --icon=resources/calc.png --out ../EBTCalc-build --overwrite --platform=linux --asar",
+    "build-linux": "electron-packager . --icon=resources/calc.png --extra-resource=resources/calc.png --out ../EBTCalc-build --overwrite --platform=linux --asar",
     "test": "nyc mocha"
   },
   "config": {
