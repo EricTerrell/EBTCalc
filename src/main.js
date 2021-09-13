@@ -196,6 +196,7 @@ function createWindow() {
         webPreferences: {
             enableRemoteModule: true,
             nodeIntegration: true,
+            contextIsolation: false,
             preload: path.join(__dirname, 'preload.js')
         }
     });
@@ -275,6 +276,7 @@ function checkForUpdates() {
             webPreferences: {
                 enableRemoteModule: true,
                 nodeIntegration: true,
+                contextIsolation: false,
                 preload: path.join(__dirname, 'preload.js')
             }
         });
@@ -316,6 +318,7 @@ function about() {
             webPreferences: {
                 enableRemoteModule: true,
                 nodeIntegration: true,
+                contextIsolation: false,
                 preload: path.join(__dirname, 'preload.js')
             }
         });
