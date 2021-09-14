@@ -18,7 +18,8 @@
     along with EBTCalc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const {ipcRenderer, remote} = require('electron');
+const remote = require('@electron/remote');
+const {ipcRenderer} = require('electron');
 const {dialog} = remote;
 const StringLiterals = require('./lib/stringLiterals.js');
 const {addContextMenu} = require('./lib/htmlElementUtils');

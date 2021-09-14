@@ -18,6 +18,10 @@
     along with EBTCalc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+const remote = require('@electron/remote/main');
+
+remote.initialize();
+
 const {dialog, app, BrowserWindow} = require('electron');
 const StringLiterals = require('../lib/stringLiterals');
 const Constants = require('../lib/constants');

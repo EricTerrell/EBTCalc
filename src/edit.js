@@ -25,8 +25,8 @@ const SelectUtils = require('./lib/selectUtils');
 const StringUtils = require('./lib/stringUtils');
 const Constants = require('./lib/constants');
 const WindowUtils = require('./lib/windowUtils');
-const {remote} = require('electron');
-const {dialog} = require('electron').remote;
+const remote = require('@electron/remote');
+const {dialog} = remote;
 const ipc = require('electron').ipcRenderer;
 const Files = require('./lib/files');
 const prettier = require('prettier');
@@ -245,6 +245,7 @@ function wireUpButtons() {
 
             if (pos !== -1) {
                 TextAreaUtils.scrollToCharacterPosition(sourceCode, pos, searchText.value.length, MAX_LINES_ABOVE);
+                sourceCode.focus();
                 displayCursorPos();
                 userWentToLine = true;
             }
@@ -257,6 +258,7 @@ function wireUpButtons() {
 
             if (pos !== -1) {
                 TextAreaUtils.scrollToCharacterPosition(sourceCode, pos, searchText.value.length, MAX_LINES_ABOVE);
+                sourceCode.focus();
                 displayCursorPos();
                 userWentToLine = true;
             }

@@ -20,7 +20,7 @@
 
 const ipc = require('electron').ipcRenderer;
 const StringLiterals = require('./lib/stringLiterals.js');
-const {remote} = require('electron');
+const remote = require('@electron/remote');
 const { Menu, MenuItem } = remote;
 
 const closeButton = document.querySelector('#close');
