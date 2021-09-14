@@ -271,7 +271,8 @@ function allowClose() {
         message: 'Custom button code has changed. Save changes?',
         buttons: Constants.YES_NO_CANCEL,
         defaultId: 0,
-        cancelId: 2
+        cancelId: 2,
+        icon: './resources/question_mark.png'
     };
 
     preventWindowClose = true;
