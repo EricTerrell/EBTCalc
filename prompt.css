@@ -12,6 +12,8 @@
 
 #button_table {
     margin-top: 1em;
+
+    border: 0px;
 }
 
 .button {

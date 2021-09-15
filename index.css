@@ -44,6 +44,14 @@ li>pre {
     font-size: x-large;
 }
 
+table. {
+    border: 0px;
+}
+
+td, th {
+    padding: 0px;
+}
+
 .table-column-1 {
     margin: auto;
     background-color: lightslategray;
@@ -96,6 +104,9 @@ li>pre {
 
 .category-and-function-buttons-td {
     background-color: lightslategray;
+
+    vertical-align: top;
+    alignment: left;
 
     overflow: auto;
 

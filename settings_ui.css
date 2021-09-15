@@ -1,3 +1,7 @@
+table, th, td {
+    border: 1px black solid;
+}
+
 input {
     font-family: Lucida Console, Courier, monospace;
     font-size: large;
