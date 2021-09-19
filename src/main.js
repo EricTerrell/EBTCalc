@@ -1,6 +1,6 @@
 /*
   EBTCalc
-  (C) Copyright 2020, Eric Bergman-Terrell
+  (C) Copyright 2021, Eric Bergman-Terrell
 
   This file is part of EBTCalc.
 
@@ -30,7 +30,7 @@ const {name} = require('../package');
 const path = require('path');
 const WindowInfo = require('../lib/windowInfo');
 const {Menu, shell, ipcMain} = require('electron');
-const WindowUtils = require('../lib/windowUtils');
+const MenuUtils = require('../lib/menuUtils');
 const OSUtils = require('../lib/osUtils');
 const pkg = require('../package');
 
@@ -170,7 +170,7 @@ function createMenus(window) {
         delete template[editIndex];
     }
 
-    if (WindowUtils.displayCustomMenus()) {
+    if (MenuUtils.displayCustomMenus()) {
         const menu = Menu.buildFromTemplate(template);
 
         if (process.platform !== StringLiterals.DARWIN) {
@@ -183,7 +183,7 @@ function createMenus(window) {
 }
 
 function createWindow() {
-    if (WindowUtils.displayCustomMenus()) {
+    if (MenuUtils.displayCustomMenus()) {
         Menu.setApplicationMenu(null);
     }
 
@@ -285,7 +285,7 @@ function checkForUpdates() {
             }
         });
 
-        WindowUtils.disableMenus(checkForUpdatesWindow);
+        MenuUtils.disableMenus(checkForUpdatesWindow);
 
         // and load the index.html of the app.
         checkForUpdatesWindow.loadFile('check_for_updates.html').then();
@@ -327,7 +327,7 @@ function about() {
             }
         });
 
-        WindowUtils.disableMenus(aboutWindow);
+        MenuUtils.disableMenus(aboutWindow);
 
         // and load the index.html of the app.
         aboutWindow.loadFile('about.html').then();
