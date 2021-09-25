@@ -18,6 +18,7 @@
     along with EBTCalc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+const remote = require('@electron/remote');
 const ipc = require('electron').ipcRenderer;
 const serializerDeserializer = require('./lib/serializerDeserializer');
 const StringLiterals = require('./lib/stringLiterals');
@@ -88,7 +89,10 @@ function wireUpUI() {
     editButton.addEventListener(StringLiterals.CLICK, () => {
         editButton.disabled = true;
 
-        WindowUtils.createWindow('edit', () => {editButton.disabled = false});
+        const editWindow = WindowUtils.createWindow('edit', () => {editButton.disabled = false});
+
+        // https://github.com/electron/remote/pull/72#issuecomment-924933800
+        remote.require("@electron/remote/main").enable(editWindow.webContents)
     });
 
     settingsButton.addEventListener(StringLiterals.CLICK, () => {
@@ -127,7 +131,10 @@ function wireUpUI() {
     const licenseTermsData = Files.getLicenseTerms();
 
     if (!licenseTermsData.userAccepted) {
-        WindowUtils.createWindow('license_terms');
+        const licenseTermsWindow = WindowUtils.createWindow('license_terms');
+
+        // https://github.com/electron/remote/pull/72#issuecomment-924933800
+        remote.require("@electron/remote/main").enable(licenseTermsWindow.webContents)
     } else if (Files.getSettings().checkForUpdates) {
         if (needToCheckVersion()) {
             VersionChecker.checkVersion();

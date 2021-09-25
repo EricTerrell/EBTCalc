@@ -205,6 +205,8 @@ function createWindow() {
         }
     });
 
+    remote.enable(mainWindow.webContents);
+
     // and load the index.html of the app.
     mainWindow.loadFile('index.html').then();
 
@@ -326,6 +328,8 @@ function about() {
                 preload: path.join(__dirname, 'preload.js')
             }
         });
+
+        remote.enable(aboutWindow.webContents);
 
         MenuUtils.disableMenus(aboutWindow);
 
