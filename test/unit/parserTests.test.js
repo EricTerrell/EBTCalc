@@ -1,6 +1,6 @@
 /*
   EBTCalc
-  (C) Copyright 2021, Eric Bergman-Terrell
+  (C) Copyright 2022, Eric Bergman-Terrell
 
   This file is part of EBTCalc.
 
@@ -97,6 +97,6 @@ describe("parser tests", () => {
         const filePath = path.join(__dirname, './scripts/syntaxError.js');
         const code = fs.readFileSync(filePath, StringLiterals.ENCODING);
 
-        expect(function() { parser.extract(code, StringLiterals.EMPTY_STRING) }).to.throw("Line 33: Unexpected token ?");
+        expect(function() { parser.extract(code, StringLiterals.EMPTY_STRING) }).to.throw("Unexpected token ?");
     });
 });
