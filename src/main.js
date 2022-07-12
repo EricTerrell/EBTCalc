@@ -205,6 +205,10 @@ function createWindow() {
         }
     });
 
+    if (windowInfo.isMaximized) {
+        mainWindow.maximize();
+    }
+
     remote.enable(mainWindow.webContents);
 
     // and load the index.html of the app.
@@ -287,6 +291,10 @@ function checkForUpdates() {
             }
         });
 
+        if (windowInfo.isMaximized) {
+            checkForUpdatesWindow.maximize();
+        }
+
         MenuUtils.disableMenus(checkForUpdatesWindow);
 
         // and load the index.html of the app.
@@ -328,6 +336,10 @@ function about() {
                 preload: path.join(__dirname, 'preload.js')
             }
         });
+
+        if (windowInfo.isMaximized) {
+            aboutWindow.maximize();
+        }
 
         remote.enable(aboutWindow.webContents);
 
