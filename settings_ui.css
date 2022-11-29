@@ -3,7 +3,6 @@ table, th, td {
 }
 
 input {
-    font-family: Lucida Console, Courier, monospace;
     font-size: large;
 }
 
@@ -12,17 +11,9 @@ button {
 
     width: 10em;
     height: 1.5em;
-    font-family: Lucida Console, Courier, monospace;
     font-size: medium;
-
-    -webkit-user-select:none;
 }
 
 th {
     background-color: lightgrey;
-}
-
-*
-{
-    -webkit-user-select:none;
 }

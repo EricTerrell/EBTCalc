@@ -1,12 +1,10 @@
-.action-button {
-    width: 12em;
-}
-
 .button {
     margin: 0 0 0 .5em;
-    font-size: .8em;
     line-height: 1em;
     padding: .6em 1em
+
+    height: 1.5em;
+    font-size: medium;
 }
 
 #action_buttons {
@@ -15,8 +13,4 @@
 
 #close {
     margin-left: 3em;
-}
-
-* {
-    -webkit-user-select:none;
 }

@@ -27,12 +27,4 @@ table {
     font-size: .8em;
     line-height: 1em;
     padding: .6em 1em;
-
-    -webkit-user-select:none;
-}
-
-#specify_variable_label,
-#dropdown_radio_button,
-#text_radio_button {
-    -webkit-user-select:none;
 }

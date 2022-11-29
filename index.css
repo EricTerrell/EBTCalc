@@ -19,7 +19,6 @@
     text-align: right;
     vertical-align: top;
 
-    -webkit-user-select:none;
     height: 13em;
 
     overflow-y: auto;
@@ -57,18 +56,12 @@ td, th {
     background-color: lightslategray;
 }
 
-.table-predefined-buttons {
-    -webkit-user-select:none;
-}
-
 .predefined-button {
     width: 2em;
     height: 2em;
 
     font-family: Lucida Console, Courier, monospace;
     font-size: large;
-
-    -webkit-user-select:none;
 }
 
 .button_spacer {
@@ -94,8 +87,6 @@ td, th {
 
     font-family: Lucida Console, Courier, monospace;
     font-size: large;
-
-    -webkit-user-select:none;
 }
 
 .category-and-function-buttons {
@@ -109,8 +100,6 @@ td, th {
     alignment: left;
 
     overflow: auto;
-
-    -webkit-user-select:none;
 }
 
 .category-row {
@@ -127,8 +116,6 @@ td, th {
     height: 1.5em;
     font-family: Lucida Console, Courier, monospace;
     font-size: medium;
-
-    -webkit-user-select:none;
 }
 
 #error {
@@ -139,14 +126,6 @@ td, th {
 
     padding-right: 0.5em;
     padding-left: 0.5em;
-
-    -webkit-user-select:none;
-}
-
-.category-row,
-#category_label,
-#table_spacer {
-    -webkit-user-select:none;
 }
 
 #bottom_section_row {
@@ -163,17 +142,12 @@ td, th {
 #bottom_buttons {
     height: 1.5em;
     display: table-cell;
-
-    -webkit-user-select: none;
 }
 
 .bottom-button {
     width: 10em;
     height: 1.5em;
-    font-family: Lucida Console, Courier, monospace;
     font-size: medium;
-
-    -webkit-user-select:none;
 }
 
 .box {

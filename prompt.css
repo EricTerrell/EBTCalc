@@ -21,10 +21,4 @@
     font-size: .8em;
     line-height: 1em;
     padding: .6em 1em;
-
-    -webkit-user-select:none;
-}
-
-#prompt_label {
-    -webkit-user-select:none;
 }
