@@ -27,19 +27,19 @@
   "license": "GPL-3.0-only",
   "devDependencies": {
     "nyc": "^15.1.0",
-    "chai": "^4.3.6",
-    "electron": "^19.0.8",
-    "electron-packager": "^15.5.1",
-    "mocha": "^10.0.0",
-    "sinon": "^14.0.0",
+    "chai": "^4.3.7",
+    "electron": "^21.3.1",
+    "electron-packager": "^17.1.1",
+    "mocha": "^10.1.0",
+    "sinon": "^15.0.0",
     "spectron": "^19.0.0"
   },
   "dependencies": {
     "@electron/remote": "^2.0.8",
-    "bignumber.js": "^9.0.2",
+    "bignumber.js": "^9.1.0",
     "chart.js": "^3.8.0",
-    "espree": "^9.3.2",
-    "prettier": "^2.7.1",
+    "espree": "^9.4.1",
+    "prettier": "^2.8.0",
     "pretty-data": "^0.40.0",
     "serialize-javascript": "^6.0.0"
   },
