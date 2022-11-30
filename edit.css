@@ -85,3 +85,10 @@
 #cancel {
     margin-left: 1em;
 }
+
+#error_container {
+    display: none;
+    padding: 0.25em;
+    font-size: medium;
+    background: red;
+}

@@ -4,16 +4,10 @@
     font-size: medium;
 }
 
-#dropdown {
-    width: 20em;
-    font-family: Lucida Console, Courier, monospace;
-    font-size: medium;
-}
-
 #button_table {
     margin-top: 1em;
 
-    border: 0px;
+    border: 0;
 }
 
 .button {

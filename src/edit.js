@@ -44,6 +44,7 @@ const syntaxCheck = document.querySelector('#syntax_check');
 const prettyPrint = document.querySelector('#pretty_print');
 const settingsButton = document.querySelector('#settings');
 const cursorPosition = document.querySelector('#cursor_position');
+const errorContainer = document.querySelector('#error_container');
 const errorPosition = document.querySelector('#error_position');
 const errorDescription = document.querySelector('#error_description');
 const goToError = document.querySelector('#go_to_error');
@@ -97,9 +98,7 @@ function goToLine(lineNumber = NaN) {
     const line2Position = TextAreaUtils.getCharacterPosition(sourceCode, lineNumber + 1, 1);
 
     TextAreaUtils.scrollToLine(sourceCode, lineNumber, line2Position - line1Position, MAX_LINES_ABOVE);
-    const actualLineNumber = displayCursorPos();
-
-    goToLineInput.value = actualLineNumber;
+    goToLineInput.value = displayCursorPos();
 
     userWentToLine = true;
 }
@@ -132,27 +131,11 @@ function wireUpButtons() {
     });
 
     syntaxCheck.addEventListener(StringLiterals.CLICK, () => {
-        try {
-            errorPosition.innerText = errorDescription.innerText = StringLiterals.EMPTY_STRING;
-            goToError.disabled = true;
-
-            updateUIPerSourceCode(false);
-            parser.extract(sourceCode.value, StringLiterals.EMPTY_STRING);
-        } catch (err) {
-            errorLine = err.lineNumber;
-            errorColumn = Math.max(1, err.column);
-
-            goToError.disabled = false;
-            errorPosition.innerText = `Syntax Error: ${err.lineNumber}:${err.column}`;
-            errorDescription.innerText = `${err.description}`;
-        }
+        doSyntaxCheck();
     });
 
     goToError.addEventListener(StringLiterals.CLICK, () => {
-        const pos = TextAreaUtils.getCharacterPosition(sourceCode, errorLine, errorColumn);
-        TextAreaUtils.scrollToCharacterPosition(sourceCode, pos, 0, MAX_LINES_ABOVE);
-
-        displayCursorPos();
+        doGoToError();
     });
 
     goToLineButton.addEventListener(StringLiterals.CLICK, () => {
@@ -312,9 +295,13 @@ function wireUpUI() {
             window.close();
         }
     });
+
+    doSyntaxCheck();
 }
 
 function updateUIPerSourceCode(setSelection = true) {
+    errorContainer.style.display = 'none';
+
     try {
         errorPosition.innerText = errorDescription.innerText = StringLiterals.EMPTY_STRING;
         goToError.disabled = true;
@@ -325,6 +312,12 @@ function updateUIPerSourceCode(setSelection = true) {
         wireUpMethods(extract.classes);
         wireUpFunctions(extract.functions);
     } catch (err) {
+        goToError.disabled = false;
+        errorPosition.innerText = `Syntax Error: ${err.lineNumber}:${err.column}`;
+        errorDescription.innerText = `${err.message}`;
+
+        errorContainer.style.display = 'inline';
+
         console.log(err);
     }
 
@@ -466,4 +459,32 @@ function wireUpMethods(classes) {
 
 function enableDisableSaveButton() {
     save.disabled = sourceCode.value === previousSourceCodeValue;
+}
+
+function doSyntaxCheck() {
+    try {
+        errorPosition.innerText = errorDescription.innerText = StringLiterals.EMPTY_STRING;
+        goToError.disabled = true;
+
+        updateUIPerSourceCode(false);
+        parser.extract(sourceCode.value, StringLiterals.EMPTY_STRING);
+    } catch (err) {
+        errorLine = err.lineNumber;
+        errorColumn = Math.max(1, err.column);
+
+        goToError.disabled = false;
+        errorPosition.innerText = `Syntax Error: ${err.lineNumber}:${err.column}`;
+        errorDescription.innerText = `${err.message}`;
+
+        errorContainer.style.display = 'inline';
+
+        doGoToError();
+    }
+}
+
+function doGoToError() {
+    const pos = TextAreaUtils.getCharacterPosition(sourceCode, errorLine, errorColumn);
+    TextAreaUtils.scrollToCharacterPosition(sourceCode, pos, 0, MAX_LINES_ABOVE);
+
+    displayCursorPos();
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:width="http://www.w3.org/1999/xhtml">
+<html lang="en-US">
 <head>
     <link href="common.css" rel="stylesheet" type="text/css"/>
     <link href="edit.css" rel="stylesheet" type="text/css"/>
@@ -42,8 +42,11 @@
             <span id="cursor_position"></span>
         </span>
 
-        <span id="error_position"></span>
-        <span id="error_description"></span>
+        <span id="error_container">
+            <span id="error_position"></span>
+            <span id="error_description"></span>
+        </span>
+
         <button id="go_to_error" class="button" disabled="false">Go to Error</button>
     </span>
 
@@ -51,7 +54,7 @@
         <button id="save" class="action-button button" disabled>Save</button>
         <button id="syntax_check" class="action-button button">Syntax Check</button>
         <button id="pretty_print" class="action-button button">Pretty-Print</button>
-        <button id="settings" class="action-button button">Settings</button>
+        <button id="settings" class="action-button button">Settings...</button>
         <button id="cancel" class="action-button button">Close</button>
     </span>
 </div>
