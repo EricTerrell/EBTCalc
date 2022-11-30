@@ -20,7 +20,9 @@
   <span>
     <input type="checkbox" id="match_case"/><label for="match_case">Match Case</label>
   </span>
-  <span>
+  <span id="go_to_line_number_span">
+    <label for="go_to_line_number">Line #:</label>
+    <input type="number" id="go_to_line_number" min="1" value="1" />
     <button id="go_to_line">Go to Line</button>
   </span>
     <span>
@@ -47,10 +49,10 @@
 
     <span id="action_buttons">
         <button id="save" class="action-button button" disabled>Save</button>
-        <button id="cancel" class="action-button button">Close</button>
         <button id="syntax_check" class="action-button button">Syntax Check</button>
         <button id="pretty_print" class="action-button button">Pretty-Print</button>
         <button id="settings" class="action-button button">Settings</button>
+        <button id="cancel" class="action-button button">Close</button>
     </span>
 </div>
 <script src="src/edit.js"></script>

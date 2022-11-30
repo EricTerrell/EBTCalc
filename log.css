@@ -9,7 +9,11 @@
 }
 
 button {
-    width: 10em;
+    margin: 0 0 0 .5em;
     height: 1.5em;
     font-size: medium;
+}
+
+#close {
+    margin-left: 1em;
 }

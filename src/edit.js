@@ -24,7 +24,6 @@ const TextAreaUtils = require('./lib/textAreaUtils');
 const SelectUtils = require('./lib/selectUtils');
 const StringUtils = require('./lib/stringUtils');
 const Constants = require('./lib/constants');
-const WindowUtils = require('./lib/windowUtils');
 const remote = require('@electron/remote');
 const {dialog} = remote;
 const ipc = require('electron').ipcRenderer;
@@ -48,7 +47,8 @@ const cursorPosition = document.querySelector('#cursor_position');
 const errorPosition = document.querySelector('#error_position');
 const errorDescription = document.querySelector('#error_description');
 const goToError = document.querySelector('#go_to_error');
-const goToLine = document.querySelector('#go_to_line');
+const goToLineButton = document.querySelector('#go_to_line');
+const goToLineInput = document.querySelector('#go_to_line_number');
 const searchText = document.querySelector('#search_text');
 const searchPrevious = document.querySelector('#search_previous');
 const searchNext = document.querySelector('#search_next');
@@ -56,7 +56,6 @@ const matchCase = document.querySelector('#match_case');
 
 let preventWindowClose = true;
 let previousSourceCodeValue;
-let goToLineWindow;
 
 // If user uses the Go To Line feature, keep track of it so that the next keystroke doesn't replace the entire
 // selection.
@@ -67,17 +66,11 @@ let errorColumn;
 
 const MAX_LINES_ABOVE = 10;
 
-ipc.on(StringLiterals.CHILD_WINDOW_CHANNEL, (event, commentLocation) => {
-    if (commentLocation) {
-        console.info(`edit.js: offset: ${JSON.stringify(commentLocation)}`);
+ipc.on(StringLiterals.CHILD_WINDOW_CHANNEL, (event, location) => {
+    if (location) {
+        console.info(`edit.js: offset: ${JSON.stringify(location)}`);
 
-        const characterPosition = TextAreaUtils.getCharacterPosition(sourceCode, commentLocation.line + 1, 1);
-        const textToSearch = sourceCode.value.slice(characterPosition);
-        const lengthOfLine = textToSearch.indexOf(StringLiterals.NEWLINE);
-
-        TextAreaUtils.scrollToLine(sourceCode, commentLocation.line + 1, lengthOfLine, 10);
-
-        userWentToLine = true;
+        goToLine(location.line + 1);
     }
 });
 
@@ -87,40 +80,28 @@ function displayCursorPos() {
     const cursorPos = TextAreaUtils.getCursorPos(sourceCode);
 
     cursorPosition.innerText = `${cursorPos.line}:${cursorPos.character}`;
+
+    return cursorPos.line;
 }
 
-function goToLineUI() {
-    if (!goToLineWindow || goToLineWindow.isDestroyed()) {
-        goToLineWindow = WindowUtils.createWindow('prompt');
+function goToLine(lineNumber = NaN) {
+    if (Number.isNaN(lineNumber)) {
+        lineNumber = Number.parseInt(goToLineInput.value);
     }
 
-    ipc.removeAllListeners(StringLiterals.MAIN_WINDOW_CHANNEL);
-    ipc.once(StringLiterals.MAIN_WINDOW_CHANNEL, (event, lineNumberString) => {
-        const lineNumber = Number.parseInt(lineNumberString);
+    if (Number.isNaN(lineNumber) || lineNumber <= 0) {
+        lineNumber = 1;
+    }
 
-        const line1Position = TextAreaUtils.getCharacterPosition(sourceCode, lineNumber, 1);
-        const line2Position = TextAreaUtils.getCharacterPosition(sourceCode, lineNumber + 1, 1);
+    const line1Position = TextAreaUtils.getCharacterPosition(sourceCode, lineNumber, 1);
+    const line2Position = TextAreaUtils.getCharacterPosition(sourceCode, lineNumber + 1, 1);
 
-        TextAreaUtils.scrollToLine(sourceCode, lineNumber, line2Position - line1Position, MAX_LINES_ABOVE);
-        displayCursorPos();
+    TextAreaUtils.scrollToLine(sourceCode, lineNumber, line2Position - line1Position, MAX_LINES_ABOVE);
+    const actualLineNumber = displayCursorPos();
 
-        userWentToLine = true;
-    });
+    goToLineInput.value = actualLineNumber;
 
-    const windowId = goToLineWindow.id;
-
-    const windowOptions = {
-        title: 'Go to Line',
-        prompt: 'Line Number:',
-        regExString: '^[\\d]+$',
-        errorTitle: 'Invalid line number',
-        errorMessage: 'Specify an (integer) line number.',
-        defaultValue: StringLiterals.EMPTY_STRING
-    };
-
-    goToLineWindow.webContents.once(StringLiterals.DID_FINISH_LOAD, () => {
-        ipc.sendTo(windowId, StringLiterals.VARIABLE_WINDOW_CHANNEL, windowOptions);
-    });
+    userWentToLine = true;
 }
 
 function wireUpButtons() {
@@ -174,8 +155,8 @@ function wireUpButtons() {
         displayCursorPos();
     });
 
-    goToLine.addEventListener(StringLiterals.CLICK, () => {
-        goToLineUI();
+    goToLineButton.addEventListener(StringLiterals.CLICK, () => {
+        goToLine();
     });
 
     sourceCode.addEventListener(StringLiterals.KEYDOWN, () => {
@@ -222,7 +203,7 @@ function wireUpButtons() {
             sourceCode.value = result.formatted;
 
             sourceCode.focus();
-            sourceCode.selectionStart = sourceCode.selectionEnd = result.cursorOffset;
+            goToLine(1);
 
             enableDisableSaveButton();
         } catch (error) {

@@ -8,12 +8,15 @@ input {
 
 button {
     margin-top: 2em;
-
-    width: 10em;
+    margin-left: 0.5em;
     height: 1.5em;
     font-size: medium;
 }
 
 th {
     background-color: lightgrey;
+}
+
+#cancel {
+    margin-left: 1em;
 }

@@ -1,3 +1,9 @@
+.button {
+    margin: 0 0 0 .5em;
+    height: 1.5em;
+    font-size: medium;
+}
+
 #search {
     width: 100%;
     height: 2em;
@@ -46,25 +52,18 @@
     margin-left: 1em;
 }
 
-#go_to_line {
-    margin-left: 1em;
+#go_to_line_number_span {
     margin-right: 1em;
+    margin-left: 1em;
+}
+
+#go_to_line_number {
+    width: 5em;
 }
 
 #match_case {
     margin-left: 1em;
-    margin-right: 1em;
-}
-
-.action-button {
-    width: 10em;
-}
-
-.button {
-    margin: 0 0 0 .5em;
-    font-size: .8em;
-    line-height: 1em;
-    padding: .6em 1em
+    margin-right: 0.25em;
 }
 
 #action_buttons {
@@ -81,4 +80,8 @@
 #cursor_position_container {
     display: inline-block;
     width: 6em;
+}
+
+#cancel {
+    margin-left: 1em;
 }

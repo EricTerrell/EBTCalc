@@ -1,7 +1,5 @@
 .button {
     margin: 0 0 0 .5em;
-    line-height: 1em;
-    padding: .6em 1em
 
     height: 1.5em;
     font-size: medium;
@@ -12,5 +10,5 @@
 }
 
 #close {
-    margin-left: 3em;
+    margin-left: 1em;
 }
