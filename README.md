@@ -8,7 +8,7 @@ EBTCalc is built on the [`Electron`](https://github.com/electron/electron) frame
 
 EBTCalc (Desktop)
 
-&#169; Copyright 2022, [`Eric Bergman-Terrell`](https://www.ericbt.com)
+&#169; Copyright 2023, [`Eric Bergman-Terrell`](https://www.ericbt.com)
 
 # Screenshots
 
