@@ -279,10 +279,12 @@ function checkForUpdates() {
         const checkForUpdatesWindow = new BrowserWindow({
             width: windowInfo.width,
             height: windowInfo.height,
-            parent: mainWindow,
-            modal: false,
+            parent: BrowserWindow.getFocusedWindow(),
+            modal: true,
             x: windowInfo.x,
             y: windowInfo.y,
+            minimizable: false,
+            maximizable: true,
             webPreferences: {
                 enableRemoteModule: true,
                 nodeIntegration: true,
@@ -326,7 +328,7 @@ function about() {
             width: windowInfo.width,
             height: windowInfo.height,
             parent: mainWindow,
-            modal: false,
+            modal: true,
             x: windowInfo.x,
             y: windowInfo.y,
             webPreferences: {
@@ -384,7 +386,7 @@ function rejectLicenseTerms() {
         buttons: Constants.OK
     };
 
-    dialog.showMessageBoxSync(options);
+    dialog.showMessageBoxSync(BrowserWindow.getFocusedWindow(), options);
 
     files.saveLicenseTerms({userAccepted: false});
 

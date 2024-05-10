@@ -62,7 +62,7 @@ function wireUpUI() {
     licenseTermsButton.addEventListener(StringLiterals.CLICK, () => {
         licenseTermsButton.disabled = true;
 
-        WindowUtils.createWindow('license_terms', () => {licenseTermsButton.disabled = false});
+        WindowUtils.createWindow('license_terms', true, () => {licenseTermsButton.disabled = false});
     });
 
     document.querySelector('#donate').addEventListener(StringLiterals.CLICK, () => {

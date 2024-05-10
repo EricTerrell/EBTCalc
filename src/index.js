@@ -89,7 +89,7 @@ function wireUpUI() {
     editButton.addEventListener(StringLiterals.CLICK, () => {
         editButton.disabled = true;
 
-        const editWindow = WindowUtils.createWindow('edit', () => {editButton.disabled = false});
+        const editWindow = WindowUtils.createWindow('edit', true, () => {editButton.disabled = false});
 
         // https://github.com/electron/remote/pull/72#issuecomment-924933800
         remote.require("@electron/remote/main").enable(editWindow.webContents)
@@ -113,7 +113,7 @@ function wireUpUI() {
             logWindow = null;
         };
 
-        logWindow = WindowUtils.createWindow('log', onDestroyedCallback);
+        logWindow = WindowUtils.createWindow('log', true, onDestroyedCallback);
     });
 
     this.window.onbeforeunload = (event) => {
@@ -276,7 +276,7 @@ function displayLogMessage(message) {
 
 function graph(whatToGraph) {
     if (!graphWindow || graphWindow.isDestroyed()) {
-        graphWindow = WindowUtils.createWindow('graph');
+        graphWindow = WindowUtils.createWindow('graph', true);
     }
 
     const numericalWindowId = graphWindow.id;
