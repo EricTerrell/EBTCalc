@@ -331,6 +331,8 @@ function about() {
             modal: true,
             x: windowInfo.x,
             y: windowInfo.y,
+            minimizable: false,
+            maximizable: true,
             webPreferences: {
                 enableRemoteModule: true,
                 nodeIntegration: true,
