@@ -30,11 +30,7 @@ const textBox = document.querySelector('#textbox');
 const ok = document.querySelector('#ok');
 const cancel = document.querySelector('#cancel');
 
-let senderId;
-
 ipcRenderer.on(StringLiterals.VARIABLE_WINDOW_CHANNEL, (event, options) => {
-    senderId = event.senderId;
-
     title.innerText = options.title;
     promptLabel.innerText = options.prompt;
     textBox.value = options.defaultValue;
@@ -46,7 +42,7 @@ ipcRenderer.on(StringLiterals.VARIABLE_WINDOW_CHANNEL, (event, options) => {
 
 function wireUpUI(options) {
     function submit() {
-        ipcRenderer.sendTo(senderId, StringLiterals.MAIN_WINDOW_CHANNEL, textBox.value);
+        ipcRenderer.invoke(StringLiterals.RELAY_TO_RENDERER, undefined, StringLiterals.MAIN_WINDOW_CHANNEL, textBox.value).then();
         window.close();
     }
 

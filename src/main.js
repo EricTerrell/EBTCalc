@@ -96,7 +96,23 @@ function wireUpUI() {
 
     ipcMain.handle(StringLiterals.ACCEPT_LICENSE_TERMS, async () => {
         acceptLicenseTerms();
-    })
+    });
+
+    ipcMain.handle(StringLiterals.RELAY_TO_RENDERER, async(event, targetWindowId, targetChannel, data) => {
+        if (!targetWindowId) {
+            targetWindowId = mainWindow.id;
+        }
+
+        console.info(`main.js ${StringLiterals.RELAY_TO_RENDERER} targetWindowId: ${targetWindowId} targetChannel: ${targetChannel} data: ${JSON.stringify(data)}`);
+
+        const window = BrowserWindow.getAllWindows().find((element) => element.id === targetWindowId);
+
+        if (window) {
+            window.webContents.send(targetChannel, data);
+        } else {
+            console.error('could not find target window');
+        }
+    });
 }
 
 function createMenus(window) {

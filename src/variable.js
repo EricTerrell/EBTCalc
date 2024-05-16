@@ -31,11 +31,7 @@ const textBox = document.querySelector('#textbox');
 const ok = document.querySelector('#ok');
 const cancel = document.querySelector('#cancel');
 
-let senderId;
-
 ipc.on(StringLiterals.VARIABLE_WINDOW_CHANNEL, (event, options) => {
-    senderId = event.senderId;
-
     title.innerText = options.prompt;
 
     if (options.variableNames.length > 0) {
@@ -88,7 +84,7 @@ function wireUpUI() {
             }
 
             if (variableName) {
-                ipc.sendTo(senderId, StringLiterals.MAIN_WINDOW_CHANNEL, variableName);
+                ipc.invoke(StringLiterals.RELAY_TO_RENDERER, undefined, StringLiterals.MAIN_WINDOW_CHANNEL, variableName).then();
                 window.close();
             }
         }

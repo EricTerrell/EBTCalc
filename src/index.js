@@ -19,7 +19,6 @@
 */
 
 const remote = require('@electron/remote');
-const ipc = require('electron').ipcRenderer;
 const serializerDeserializer = require('./lib/serializerDeserializer');
 const StringLiterals = require('./lib/stringLiterals');
 const Constants = require('./lib/constants');
@@ -113,13 +112,17 @@ function wireUpUI() {
             logWindow = null;
         };
 
-        logWindow = WindowUtils.createWindow('log', true, onDestroyedCallback);
+        logWindow = WindowUtils.createWindow('log', false, onDestroyedCallback);
     });
 
     this.window.onbeforeunload = (event) => {
         saveData();
 
         delete event['returnValue'];
+
+        if (logWindow) {
+            logWindow.close();
+        }
     };
 
     addMinMaxDataToPredefinedButtons();
@@ -279,11 +282,9 @@ function graph(whatToGraph) {
         graphWindow = WindowUtils.createWindow('graph', true);
     }
 
-    const numericalWindowId = graphWindow.id;
-
     graphWindow.webContents.once(StringLiterals.DID_FINISH_LOAD, () => {
         console.info(`sending ${whatToGraph} to graph window`);
-        ipc.sendTo(numericalWindowId, StringLiterals.CHILD_WINDOW_CHANNEL, whatToGraph);
+        graphWindow.webContents.send(StringLiterals.CHILD_WINDOW_CHANNEL, whatToGraph);
     });
 }
 
