@@ -6,9 +6,8 @@
   "scripts": {
     "start": "electron .",
     "build": "npm run build-windows && npm run build-linux",
-    "build-windows": "electron-packager . --icon=resources/calc.ico --out ../EBTCalc-build --overwrite --platform=win32 --asar --extraResource=resources/question_mark.png",
-    "build-mac": "electron-packager . --out ../EBTCalc-build --overwrite --platform=darwin --asar",
-    "build-linux": "electron-packager . --icon=resources/calc.png --extra-resource=resources/calc.png --out ../EBTCalc-build --overwrite --platform=linux --asar --extraResource=resources/question_mark.png",
+    "build-windows": "electron-packager . --icon=resources/calc.ico --out ../EBTCalc-build --overwrite --platform=win32 --asar --extraResource=resources/calc.ico --extraResource=resources/question_mark.png --ignore=setup",
+    "build-linux": "electron-packager . --icon=resources/calc.png --extra-resource=resources/calc.png --out ../EBTCalc-build --overwrite --platform=linux --asar --extraResource=resources/question_mark.png --ignore=setup",
     "test": "nyc mocha"
   },
   "config": {
@@ -26,11 +25,11 @@
   "author": "eric@terrell.info",
   "license": "GPL-3.0-only",
   "devDependencies": {
-    "nyc": "^15.1.0",
-    "chai": "^5.1.1",
-    "electron": "^30.0.5",
-    "electron-packager": "^17.1.2",
+    "electron": "^30.0.6",
+    "@electron/packager": "^18.3.2",
+    "chai": "^4.4.1",
     "mocha": "^10.4.0",
+    "nyc": "^15.1.0",
     "sinon": "^18.0.0",
     "spectron": "^19.0.0"
   },
