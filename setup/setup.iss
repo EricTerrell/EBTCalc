@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "EBTCalc"
-#define MyAppVersion "1.0.24"
+#define MyAppVersion "1.0.25"
 #define MyAppPublisher "Eric Bergman-Terrell"
 #define MyAppURL "https://www.ericbt.com/"
 #define MyAppExeName "EBTCalc.exe"

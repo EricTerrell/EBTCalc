@@ -348,13 +348,13 @@ class Trig {
     };
 
     // button Trig.sin "Sin" "Trig"
-    static sin(degrees) { return Math.sin(Trig.radians(degrees)); };
+    static sin(degrees) { return Math.sin(Trig.radians(Trig.normalizeAngle(degrees))); };
 
     // button Trig.asin "ASin" "Trig"
     static asin(x) { return Trig.degrees(Math.asin(x)); };
 
     // button Trig.cos "Cos" "Trig"
-    static cos(degrees) { return Math.cos(Trig.radians(degrees)); };
+    static cos(degrees) { return Math.cos(Trig.radians(Trig.normalizeAngle(degrees))); };
 
     // button Trig.acos "ACos" "Trig"
     static acos(x) {
@@ -362,7 +362,7 @@ class Trig {
     };
 
     // button Trig.tan "Tan" "Trig"
-    static tan(degrees) { return degrees !== 90 ? Math.tan(Trig.radians(degrees)) : NaN; };
+    static tan(degrees) { return degrees !== 90 ? Math.tan(Trig.radians(Trig.normalizeAngle(degrees))) : NaN; };
 
     // button Trig.atan "ATan" "Trig"
     static atan(x) {
@@ -386,6 +386,20 @@ class Trig {
 
     // button Trig.atanh "ATanH" "Trig"
     static atanh(x) { return Math.atanh(x); };
+
+    static normalizeAngle(degrees) {
+        const circleDegrees = 360.0;
+
+        const multiple = Math.abs(degrees) / circleDegrees;
+
+        if (multiple > 1.0) {
+            const sign = Math.sign(degrees);
+
+            degrees = (Math.abs(degrees) - (circleDegrees * Math.floor(multiple))) * sign;
+        }
+
+        return degrees;
+    }
 }
 
 class Statistics {
