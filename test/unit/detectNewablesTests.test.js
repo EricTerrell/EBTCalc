@@ -1,6 +1,6 @@
 /*
   EBTCalc
-  (C) Copyright 2024, Eric Bergman-Terrell
+  (C) Copyright 2025, Eric Bergman-Terrell
 
   This file is part of EBTCalc.
 
