@@ -31,8 +31,7 @@
     "chai": "^4.5.0",
     "mocha": "^10.7.3",
     "nyc": "^15.1.0",
-    "sinon": "^18.0.0",
-    "spectron": "^19.0.0"
+    "sinon": "^18.0.0"
   },
   "dependencies": {
     "@electron/remote": "^2.1.2",
