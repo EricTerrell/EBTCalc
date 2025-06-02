@@ -47,6 +47,20 @@ npm start
 
 To enable the Chrome debugging tools, set the DEBUG_MENUS environment variable to true (see displayCustomMenus in WindowUtils)
 
+# Building
+
+To build:
+
+```sh
+npm run build
+```
+This will create all versions in an EBTCalc-build folder.
+
+# Running
+
+When running the Linux (ARM 64-bit) version, you may need to include
+the "--no-sandbox" option.
+
 # License
 
 [`GPL3`](https://www.gnu.org/licenses/gpl-3.0.en.html)
