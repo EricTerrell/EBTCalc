@@ -82,8 +82,6 @@ function wireUpUI() {
             // dock icon is clicked and there are no other windows open.
             if (mainWindow === null) createWindow()
         });
-
-        app.commandLine.appendSwitch('remote-debugging-port', '9222');
     }
 
     ipcMain.handle(StringLiterals.CHECK_FOR_UPDATES, async () => {
@@ -247,11 +245,6 @@ function createWindow() {
     });
 
     createMenus(mainWindow);
-
-    // Open the DevTools if in debug mode.
-    if (process.env["DEBUG"] === "1") {
-        mainWindow.webContents.openDevTools();
-    }
 }
 
 ipcMain.handle(StringLiterals.NOTIFY_SOURCE_CODE_CHANGED, async(event) => {
