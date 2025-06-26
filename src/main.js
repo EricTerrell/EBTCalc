@@ -230,9 +230,6 @@ function createWindow() {
     // and load the index.html of the app.
     mainWindow.loadFile('index.html').then();
 
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
-
     // Emitted when the window is closed.
     mainWindow.on(StringLiterals.CLOSED, function () {
         // Dereference the window object, usually you would store windows
@@ -250,6 +247,11 @@ function createWindow() {
     });
 
     createMenus(mainWindow);
+
+    // Open the DevTools if in debug mode.
+    if (process.env["DEBUG"] === "1") {
+        mainWindow.webContents.openDevTools();
+    }
 }
 
 ipcMain.handle(StringLiterals.NOTIFY_SOURCE_CODE_CHANGED, async(event) => {
@@ -326,7 +328,10 @@ function checkForUpdates() {
             WindowInfo.saveWindowInfo(windowId, checkForUpdatesWindow);
         });
 
-        checkForUpdatesWindow.on(StringLiterals.CLOSE, () => {
+        checkForUpdatesWindow.on(StringLiterals.CLOSED, () => {
+            console.log(`Destroying window ${windowId}`);
+            checkForUpdatesWindow.destroy();
+
             checkForUpdatesEnabled = true;
         });
     }
@@ -339,6 +344,8 @@ function about() {
         const windowId = 'about';
 
         const windowInfo = WindowInfo.loadWindowInfo(windowId);
+
+        console.log(`creating window id: ${windowId}`);
 
         const aboutWindow = new BrowserWindow({
             width: windowInfo.width,
@@ -376,7 +383,10 @@ function about() {
             WindowInfo.saveWindowInfo(windowId, aboutWindow);
         });
 
-        aboutWindow.on(StringLiterals.CLOSE, () => {
+        aboutWindow.on(StringLiterals.CLOSED, () => {
+            console.log(`Destroying window ${windowId}`);
+            aboutWindow.destroy();
+            
             aboutEnabled = true;
         });
     }
