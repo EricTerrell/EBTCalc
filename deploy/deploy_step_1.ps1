@@ -1,4 +1,4 @@
-/*
+<#
   EBTCalc
   (C) Copyright 2026, Eric Bergman-Terrell
 
@@ -16,11 +16,26 @@
 
   You should have received a copy of the GNU General Public License
   along with EBTCalc.  If not, see <http://www.gnu.org/licenses/>.
-*/
+#>
 
-module.exports = class I18NUtils {
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare
-    static localeCompare(a, b, caseSensitive = true) {
-        return a.localeCompare(b, undefined, {sensitivity: caseSensitive ? 'variant' : 'accent'});
-    }
-};
+Push-Location
+
+c:
+
+cd "C:\Users\erict\Documents\software development\electron-programmable-rpn-calculator"
+
+$windows_setup_path = ".\setup\Output\EBTCalc Setup.exe"
+
+if (Test-Path "$windows_setup_path")
+{
+    Remove-Item -Path "$windows_setup_path" -Force
+}
+
+Get-ChildItem -Path "C:\Users\erict\Documents\software development\EBTCalc-build" -Directory | Remove-Item -Recurse -Force
+Remove-Item -Path "C:\Users\erict\Documents\software development\EBTCalc-build\*.zip" -Force
+
+npm run build
+
+Write-Host "Now run Inno Setup Compiler (load electron-programmable-calculator/setup.iss). Build/Compile."
+
+Pop-Location

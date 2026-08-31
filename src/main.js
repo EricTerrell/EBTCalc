@@ -1,6 +1,6 @@
 /*
   EBTCalc
-  (C) Copyright 2025, Eric Bergman-Terrell
+  (C) Copyright 2026, Eric Bergman-Terrell
 
   This file is part of EBTCalc.
 
@@ -148,7 +148,7 @@ function createMenus(window) {
                     type: StringLiterals.MENU_SEPARATOR
                 },
                 {
-                    label: 'Check for &Updates', click() { checkForUpdates(); }
+                    label: 'Check for &Updates...', click() { checkForUpdates(); }
                 },
                 {
                     type: StringLiterals.MENU_SEPARATOR
@@ -172,7 +172,7 @@ function createMenus(window) {
                     type: StringLiterals.MENU_SEPARATOR
                 },
                 {
-                    label: `&About ${pkg.name}`, click() { about(); }
+                    label: `&About ${pkg.name}...`, click() { about(); }
                 }
             ]
         }
