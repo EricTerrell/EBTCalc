@@ -11,7 +11,7 @@ EBTCalc is built on the [`Electron`](https://github.com/electron/electron) frame
 
 EBTCalc (Desktop)
 
-&#169; Copyright 2025, [`Eric Bergman-Terrell`](https://www.ericbt.com)
+&#169; Copyright 2026, [`Eric Bergman-Terrell`](https://www.ericbt.com)
 
 # Screenshots
 

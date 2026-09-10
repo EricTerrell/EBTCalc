@@ -626,9 +626,9 @@ class StackManipulation {
 }
 
 class Angles {
-    // button Angles.dms "→dms" "Angles"
-    static dms(decimalDegrees) {
-        let sign = decimalDegrees >= 0.0 ? '' : '-';
+    // button Angles.toDMS "→DMS" "Angles"
+    static toDMS(decimalDegrees) {
+        let sign = Math.sign(decimalDegrees);
 
         decimalDegrees = Math.abs(decimalDegrees);
 
@@ -640,11 +640,19 @@ class Angles {
 
         fractionalDegrees = fractionalDegrees - minutes / 60.0;
 
-        let seconds = fractionalDegrees * 60.0 * 60.0;
+        let seconds = fractionalDegrees * 3600.0;
 
-        let wholeSeconds = Math.trunc(seconds);
-        let fractionalSeconds = Math.trunc((seconds - wholeSeconds) * 1000.0);
+        ___Stack.push(sign * degrees);
+        ___Stack.push(minutes);
+        ___Stack.push(seconds);
+    }
 
-        return `${sign}${degrees}°${String(minutes).padStart(2, '0')}'${wholeSeconds}.${String(fractionalSeconds).padStart(3, '0')}"`;
+    // button Angles.toDecimal "→Decimal" "Angles"
+    static toDecimal(integerDegrees, minutes, seconds) {
+        let sign = Math.sign(integerDegrees);
+
+        integerDegrees = Math.abs(integerDegrees);
+
+        return sign * (integerDegrees + minutes / 60.0 + seconds / 3600.0);
     }
 }
