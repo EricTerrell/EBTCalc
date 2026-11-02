@@ -211,6 +211,7 @@ function createWindow() {
         height: windowInfo.height,
         x: windowInfo.x,
         y: windowInfo.y,
+        icon: path.join(__dirname, '../resources/calc.png'),
         webPreferences: {
             enableRemoteModule: true,
             nodeIntegration: true,

@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "npm run build-windows && npm run build-linux-intel-amd-64-bit && npm run build-linux-arm-64-bit",
+    "build-linux": "npm run build-linux-intel-amd-64-bit && npm run build-linux-arm-64-bit",
     "build-windows": "electron-packager . --icon=resources/calc.ico --out ../EBTCalc-build --overwrite --platform=win32 --asar --extraResource=resources/calc.ico --extraResource=resources/question_mark.png --ignore=setup",
     "build-linux-intel-amd-64-bit": "electron-packager . --icon=resources/calc.png --extra-resource=resources/calc.png --out ../EBTCalc-build --overwrite --platform=linux --asar --extraResource=resources/question_mark.png --ignore=setup",
     "build-linux-arm-64-bit": "electron-packager . --icon=resources/calc.png --extra-resource=resources/calc.png --out ../EBTCalc-build --overwrite --platform=linux --arch=arm64 --asar --extraResource=resources/question_mark.png --ignore=setup",
